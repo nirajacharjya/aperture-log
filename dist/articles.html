@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Articles | Aperture Log</title>
+<meta name="description" content="All articles from Aperture Log — writing on technology, artificial intelligence, cybersecurity, photography, travel, and student life from Niraj.">
+<link rel="canonical" href="https://aperturelog.com/articles">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Articles | Aperture Log">
+<meta property="og:description" content="Writing on technology, AI, cybersecurity, photography, travel, and student life.">
+<meta property="og:url" content="https://aperturelog.com/articles">
+<meta property="og:site_name" content="Aperture Log">
+<meta property="og:image" content="https://picsum.photos/seed/aperturearticles/1200/630">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Articles",
+  "url": "https://aperturelog.com/articles",
+  "isPartOf": { "@type": "WebSite", "name": "Aperture Log", "url": "https://aperturelog.com" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas:#0B0E14; --bg-surface:#12161F; --bg-surface-2:#171C26;
+    --border:rgba(243,241,234,0.09); --border-strong:rgba(243,241,234,0.16);
+    --text-primary:#F3F1EA; --text-secondary:#A6ADBB; --text-tertiary:#6B7280;
+    --accent-amber:#E8A33D; --accent-amber-dim:rgba(232,163,61,0.14);
+    --accent-teal:#5FD7C7; --accent-teal-dim:rgba(95,215,199,0.14);
+    --shadow-lift: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html.light{
+    --bg-canvas:#FAF8F3; --bg-surface:#FFFFFF; --bg-surface-2:#F2EFE7;
+    --border:rgba(20,20,20,0.08); --border-strong:rgba(20,20,20,0.14);
+    --text-primary:#161512; --text-secondary:#54524A; --text-tertiary:#8A8779;
+    --accent-amber:#C7791F; --accent-amber-dim:rgba(199,121,31,0.10);
+    --accent-teal:#1A9C89; --accent-teal-dim:rgba(26,156,137,0.10);
+    --shadow-lift: 0 20px 60px rgba(20,15,5,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg-canvas); color:var(--text-primary); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; overflow-x:hidden; }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
+
+  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
+  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
+  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
+  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  .art-hero{ padding:80px 0 20px; position:relative; background:radial-gradient(ellipse 900px 500px at 90% -10%, var(--accent-teal-dim), transparent 60%); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:22px; }
+  h1.art-title{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(34px,5.4vw,58px); letter-spacing:-.01em; }
+  h1.art-title em{ font-style:italic; color:var(--accent-amber); }
+  .art-sub{ margin-top:16px; font-size:16.5px; color:var(--text-secondary); max-width:560px; line-height:1.7; }
+
+  .controls{ padding:40px 0 20px; display:flex; flex-direction:column; gap:20px; }
+  .search-row{ position:relative; max-width:460px; }
+  .search-row svg{ position:absolute; left:16px; top:50%; transform:translateY(-50%); color:var(--text-tertiary); }
+  .search-row input{ width:100%; padding:13px 16px 13px 44px; border-radius:12px; border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--text-primary); font-size:14.5px; font-family:'Inter'; }
+  .search-row input:focus{ outline:none; border-color:var(--accent-teal); box-shadow:0 0 0 3px var(--accent-teal-dim); }
+  .filter-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .filter-pill{ font-family:'JetBrains Mono', monospace; font-size:12.5px; padding:8px 15px; border-radius:100px; border:1px solid var(--border-strong); background:var(--bg-surface); color:var(--text-secondary); cursor:pointer; transition:all .18s ease; }
+  .filter-pill:hover{ border-color:var(--accent-teal); color:var(--text-primary); }
+  .filter-pill.active{ background:var(--text-primary); color:var(--bg-canvas); border-color:var(--text-primary); }
+  .result-count{ font-size:13px; color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; padding:24px 0 8px; }
+
+  .grid-articles{ display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; padding-bottom:100px; }
+  @media (max-width:940px){ .grid-articles{ grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:640px){ .grid-articles{ grid-template-columns:1fr;} }
+  .card{ background:var(--bg-surface); border:1px solid var(--border); border-radius:18px; overflow:hidden; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease; display:flex; flex-direction:column; }
+  .card:hover{ transform:translateY(-6px); border-color:var(--border-strong); box-shadow:var(--shadow-lift); }
+  .card-media{ position:relative; aspect-ratio:16/10; overflow:hidden; }
+  .card-media img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+  .card:hover .card-media img{ transform:scale(1.06); }
+  .card-cat{ position:absolute; top:14px; left:14px; font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase; padding:6px 11px; border-radius:100px; background:rgba(11,14,20,0.72); backdrop-filter:blur(6px); color:#F3F1EA; border:1px solid rgba(255,255,255,0.14); }
+  .card-body{ padding:22px; display:flex; flex-direction:column; gap:12px; flex:1; }
+  .card-meta{ display:flex; gap:12px; font-size:12.5px; color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; }
+  .card-title{ font-family:'Fraunces', serif; font-size:20px; font-weight:500; line-height:1.3; }
+  .card-desc{ font-size:14px; color:var(--text-secondary); line-height:1.55; flex:1; }
+  .card-foot{ display:flex; align-items:center; gap:8px; margin-top:6px; font-size:13px; font-weight:600; color:var(--accent-amber); }
+  .card-foot svg{ transition:transform .2s ease; }
+  .card:hover .card-foot svg{ transform:translateX(3px); }
+
+  .no-results{ display:none; text-align:center; padding:60px 20px; color:var(--text-tertiary); font-size:15px; }
+  .no-results.show{ display:block; }
+
+  /* ---------- Pagination ---------- */
+  .pagination{ display:none; align-items:center; justify-content:center; gap:8px; padding:10px 0 90px; flex-wrap:wrap; }
+  .pagination.show{ display:flex; }
+  .page-btn{
+    min-width:40px; height:40px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong);
+    background:var(--bg-surface); color:var(--text-secondary); font-size:14px; font-weight:600;
+    font-family:'JetBrains Mono', monospace; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .18s ease;
+  }
+  .page-btn:hover:not(:disabled){ border-color:var(--accent-teal); color:var(--text-primary); }
+  .page-btn.active{ background:var(--text-primary); color:var(--bg-canvas); border-color:var(--text-primary); }
+  .page-btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .page-ellipsis{ color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size:13px; padding:0 4px; }
+
+  footer{ border-top:1px solid var(--border); padding:40px 0 30px; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; }
+  .foot-bottom a:hover{ color:var(--accent-amber); }
+  .foot-links{ display:flex; gap:20px; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
+    <ul class="nav-links">
+      <li><a href="articles.html" class="active">Articles</a></li>
+      <li><a href="photography.html">Photography</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="art-hero">
+  <div class="wrap">
+    <span class="eyebrow">writing</span>
+    <h1 class="art-title">All <em>Articles</em>.</h1>
+    <p class="art-sub">Notes on technology, photography, and everything in between — search or filter by category to find what you're after.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="search-row">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" placeholder="Search articles...">
+    </div>
+    <div class="filter-row" id="filter-row">
+      <button class="filter-pill active" data-cat="all">All</button>
+      <button class="filter-pill" data-cat="ai">Artificial Intelligence</button>
+      <button class="filter-pill" data-cat="photography">Photography</button>
+      <button class="filter-pill" data-cat="cybersecurity">Cybersecurity</button>
+      <button class="filter-pill" data-cat="productivity">Productivity</button>
+      <button class="filter-pill" data-cat="webdev">Web Development</button>
+      <button class="filter-pill" data-cat="travel">Travel</button>
+    </div>
+  </div>
+
+  <p class="result-count"><span id="result-count">12</span> articles</p>
+
+  <div class="grid-articles" id="articles-grid">
+
+    <a class="card" data-cat="ai" data-title="what building a tiny transformer taught me about attention" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/apertureai/700/440" alt="Abstract render of a neural network">
+        <span class="card-cat">Artificial Intelligence</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>6 min read</span><span>·</span><span>Jul 09, 2026</span></div>
+        <h3 class="card-title">What Building a Tiny Transformer Taught Me About Attention</h3>
+        <p class="card-desc">Notes from implementing self-attention from scratch — the bugs, the "aha" moments, and why the math finally clicked on the third rewrite.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="photography" data-title="chasing blue hour three mornings on the same ridge" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturemtn/700/440" alt="Mountain ridge at dawn">
+        <span class="card-cat">Photography</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>4 min read</span><span>·</span><span>Jul 03, 2026</span></div>
+        <h3 class="card-title">Chasing Blue Hour: Three Mornings on the Same Ridge</h3>
+        <p class="card-desc">Same trail, three sunrises, three completely different skies — and what I changed in-camera each time to chase them.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="cybersecurity" data-title="my first ctf everything i got wrong before getting it right" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturesec/700/440" alt="Terminal with security scan output">
+        <span class="card-cat">Cybersecurity</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>8 min read</span><span>·</span><span>Jun 27, 2026</span></div>
+        <h3 class="card-title">My First CTF: Everything I Got Wrong Before Getting It Right</h3>
+        <p class="card-desc">A walkthrough of a beginner capture-the-flag competition, and the reconnaissance habit that finally made things click.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="productivity" data-title="the two list system that fixed my semester" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturedesk/700/440" alt="Minimal desk setup with notebook">
+        <span class="card-cat">Productivity</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>5 min read</span><span>·</span><span>Jun 21, 2026</span></div>
+        <h3 class="card-title">The Two-List System That Fixed My Semester</h3>
+        <p class="card-desc">Why splitting "urgent" from "important" into physically separate lists changed how I actually get through a study week.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="webdev" data-title="rebuilding this site for the third time and why thats fine" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturecode/700/440" alt="Code editor with colorful syntax highlighting">
+        <span class="card-cat">Web Development</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>7 min read</span><span>·</span><span>Jun 14, 2026</span></div>
+        <h3 class="card-title">Rebuilding This Site for the Third Time (and Why That's Fine)</h3>
+        <p class="card-desc">A behind-the-scenes look at the stack powering this blog, and the tradeoffs I made to keep it simple enough to actually maintain.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="travel" data-title="slow trains what a 14 hour ride taught me about patience" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturetravel/700/440" alt="Train station platform with motion blur">
+        <span class="card-cat">Travel</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>6 min read</span><span>·</span><span>Jun 08, 2026</span></div>
+        <h3 class="card-title">Slow Trains: What a 14-Hour Ride Taught Me About Patience</h3>
+        <p class="card-desc">Skipping the flight for a night train across the country — and the strange, unhurried clarity that came with it.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="ai" data-title="prompt engineering habits that actually stuck" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturellm/700/440" alt="Laptop screen showing an AI chat interface">
+        <span class="card-cat">Artificial Intelligence</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>5 min read</span><span>·</span><span>Jun 02, 2026</span></div>
+        <h3 class="card-title">Prompt Engineering Habits That Actually Stuck</h3>
+        <p class="card-desc">The handful of small habits that made my prompts noticeably more reliable, and the ones I dropped after they stopped helping.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="photography" data-title="what monsoon season taught me about patience and light" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturemonsoon/700/440" alt="Dramatic monsoon clouds over a green landscape">
+        <span class="card-cat">Photography</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>5 min read</span><span>·</span><span>May 27, 2026</span></div>
+        <h3 class="card-title">What Monsoon Season Taught Me About Patience and Light</h3>
+        <p class="card-desc">Waiting hours for a single break in the clouds, and why the shots I almost didn't take turned out to be the best ones.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="cybersecurity" data-title="setting up a home lab for security practice on a student budget" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/aperturehomelab/700/440" alt="Small home server rack setup">
+        <span class="card-cat">Cybersecurity</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>7 min read</span><span>·</span><span>May 20, 2026</span></div>
+        <h3 class="card-title">Setting Up a Home Lab for Security Practice on a Student Budget</h3>
+        <p class="card-desc">What I actually needed to start practicing — and the expensive gear I convinced myself I didn't.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="webdev" data-title="things i wish i knew before my first internship interview" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/apertureinterview/700/440" alt="Person typing on a laptop before an interview">
+        <span class="card-cat">Student Life</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>4 min read</span><span>·</span><span>May 14, 2026</span></div>
+        <h3 class="card-title">Things I Wish I Knew Before My First Internship Interview</h3>
+        <p class="card-desc">The questions that caught me off guard, and how I'd prepare differently if I could do it over.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="travel" data-title="a weekend in shillong with nothing planned" href="article.html">
+      <div class="card-media">
+        <img src="https://picsum.photos/seed/apertureshillong/700/440" alt="Misty hills of Shillong, Meghalaya">
+        <span class="card-cat">Travel</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta"><span>6 min read</span><span>·</span><span>May 07, 2026</span></div>
+        <h3 class="card-title">A Weekend in Shillong With Nothing Planned</h3>
+        <p class="card-desc">What happens when you skip the itinerary entirely and just follow whichever road looks interesting.</p>
+        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="no-results" id="no-results">No articles match your search. Try a different keyword or category.</div>
+
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Aperture Log. Built entry by entry.</span>
+      <div class="foot-links">
+        <a href="terms&condition.html">Terms</a>
+        <a href="privacypolicy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
+  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  const cards = Array.from(document.querySelectorAll('#articles-grid .card'));
+  const searchInput = document.getElementById('search-input');
+  const filterPills = document.querySelectorAll('.filter-pill');
+  const resultCount = document.getElementById('result-count');
+  const noResults = document.getElementById('no-results');
+  const paginationEl = document.getElementById('pagination');
+  const articlesGrid = document.getElementById('articles-grid');
+  let activeCat = 'all';
+  const PER_PAGE = 6;
+  let currentPage = 1;
+
+  function getFiltered(){
+    const q = searchInput.value.trim().toLowerCase();
+    return cards.filter(card => {
+      const matchesCat = activeCat === 'all' || card.dataset.cat === activeCat;
+      const matchesSearch = !q || card.dataset.title.includes(q);
+      return matchesCat && matchesSearch;
+    });
+  }
+
+  function renderPagination(totalPages){
+    paginationEl.innerHTML = '';
+    paginationEl.classList.toggle('show', totalPages > 1);
+    if(totalPages <= 1) return;
+
+    function makeBtn(label, page, opts = {}){
+      const btn = document.createElement('button');
+      btn.className = 'page-btn' + (opts.active ? ' active' : '');
+      btn.innerHTML = label;
+      btn.disabled = !!opts.disabled;
+      btn.addEventListener('click', () => goToPage(page));
+      return btn;
+    }
+
+    paginationEl.appendChild(makeBtn(
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg> Prev',
+      currentPage - 1, { disabled: currentPage === 1 }
+    ));
+
+    const pageNumbers = [];
+    for(let p = 1; p <= totalPages; p++){
+      if(p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) pageNumbers.push(p);
+      else if(pageNumbers[pageNumbers.length - 1] !== '...') pageNumbers.push('...');
+    }
+    pageNumbers.forEach(p => {
+      if(p === '...'){
+        const span = document.createElement('span');
+        span.className = 'page-ellipsis';
+        span.textContent = '···';
+        paginationEl.appendChild(span);
+      } else {
+        paginationEl.appendChild(makeBtn(p, p, { active: p === currentPage }));
+      }
+    });
+
+    paginationEl.appendChild(makeBtn(
+      'Next <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>',
+      currentPage + 1, { disabled: currentPage === totalPages }
+    ));
+  }
+
+  function goToPage(page){
+    currentPage = page;
+    applyFilters(false);
+    articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function applyFilters(resetPage = true){
+    if(resetPage) currentPage = 1;
+    const filtered = getFiltered();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+    if(currentPage > totalPages) currentPage = totalPages;
+
+    const start = (currentPage - 1) * PER_PAGE;
+    const end = start + PER_PAGE;
+
+    cards.forEach(card => card.style.display = 'none');
+    filtered.slice(start, end).forEach(card => card.style.display = '');
+
+    resultCount.textContent = filtered.length;
+    noResults.classList.toggle('show', filtered.length === 0);
+    renderPagination(totalPages);
+  }
+
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      activeCat = pill.dataset.cat;
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener('input', () => applyFilters());
+  applyFilters();
+</script>
+
+</body>
+</html>

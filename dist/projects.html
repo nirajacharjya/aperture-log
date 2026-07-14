@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Projects | Aperture Log</title>
+<meta name="description" content="Projects built by Niraj — web apps, tools, and experiments made while learning software development, from Trailmark to this very site.">
+<link rel="canonical" href="https://aperturelog.com/projects">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projects | Aperture Log">
+<meta property="og:description" content="Web apps, tools, and experiments built while learning software development.">
+<meta property="og:url" content="https://aperturelog.com/projects">
+<meta property="og:site_name" content="Aperture Log">
+<meta property="og:image" content="https://picsum.photos/seed/apertureprojectshero/1200/630">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Projects",
+  "url": "https://aperturelog.com/projects",
+  "isPartOf": { "@type": "WebSite", "name": "Aperture Log", "url": "https://aperturelog.com" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas:#0B0E14; --bg-surface:#12161F; --bg-surface-2:#171C26;
+    --border:rgba(243,241,234,0.09); --border-strong:rgba(243,241,234,0.16);
+    --text-primary:#F3F1EA; --text-secondary:#A6ADBB; --text-tertiary:#6B7280;
+    --accent-amber:#E8A33D; --accent-amber-dim:rgba(232,163,61,0.14);
+    --accent-teal:#5FD7C7; --accent-teal-dim:rgba(95,215,199,0.14);
+    --shadow-lift: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html.light{
+    --bg-canvas:#FAF8F3; --bg-surface:#FFFFFF; --bg-surface-2:#F2EFE7;
+    --border:rgba(20,20,20,0.08); --border-strong:rgba(20,20,20,0.14);
+    --text-primary:#161512; --text-secondary:#54524A; --text-tertiary:#8A8779;
+    --accent-amber:#C7791F; --accent-amber-dim:rgba(199,121,31,0.10);
+    --accent-teal:#1A9C89; --accent-teal-dim:rgba(26,156,137,0.10);
+    --shadow-lift: 0 20px 60px rgba(20,15,5,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg-canvas); color:var(--text-primary); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; overflow-x:hidden; }
+  a{color:inherit; text-decoration:none;}
+  .wrap{ max-width:900px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
+
+  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
+  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
+  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
+  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .pj-hero{ padding:72px 0 34px; position:relative; background:radial-gradient(ellipse 700px 400px at 90% -10%, var(--accent-teal-dim), transparent 60%); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:20px; }
+  h1.pj-title{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(30px,4.6vw,46px); letter-spacing:-.01em; }
+  h1.pj-title em{ font-style:italic; color:var(--accent-amber); }
+  .pj-sub{ margin-top:14px; font-size:15.5px; color:var(--text-secondary); max-width:520px; line-height:1.65; }
+
+  .result-count{ font-size:13px; color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; padding:30px 0 6px; }
+
+  /* ---------- List ---------- */
+  .project-list{ border-top:1px solid var(--border); padding-bottom:10px; }
+  .proj-row{ display:flex; gap:20px; padding:26px 0; border-bottom:1px solid var(--border); align-items:flex-start; transition:background .2s ease; }
+  .proj-row:hover{ background:var(--bg-surface); margin:0 -16px; padding-left:16px; padding-right:16px; border-radius:14px; }
+  @media (max-width:560px){ .proj-row{ flex-direction:column; gap:12px; } .proj-row:hover{ margin:0; padding-left:0; padding-right:0; } }
+
+  .proj-index{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-tertiary); min-width:28px; padding-top:3px; flex-shrink:0; }
+
+  .proj-main{ flex:1; min-width:0; }
+  .proj-top-row{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:8px; }
+  .proj-title{ font-family:'Fraunces', serif; font-size:19px; font-weight:500; }
+  .status-pill{ font-family:'JetBrains Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; padding:4px 10px; border-radius:100px; }
+  .status-live{ background:var(--accent-teal-dim); color:var(--accent-teal); }
+  .status-progress{ background:var(--accent-amber-dim); color:var(--accent-amber); }
+  .proj-desc{ font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:12px; max-width:560px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:7px; }
+  .tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--text-tertiary); border:1px solid var(--border); padding:3px 9px; border-radius:6px; }
+
+  .proj-links{ display:flex; gap:14px; flex-shrink:0; align-items:center; padding-top:4px; }
+  @media (max-width:560px){ .proj-links{ padding-top:0; } }
+  .proj-link-btn{ display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--text-secondary); white-space:nowrap; }
+  .proj-link-btn:hover{ color:var(--accent-amber); }
+
+  /* ---------- Pagination ---------- */
+  .pagination{ display:none; align-items:center; justify-content:center; gap:8px; padding:32px 0 90px; flex-wrap:wrap; }
+  .pagination.show{ display:flex; }
+  .page-btn{
+    min-width:38px; height:38px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong);
+    background:var(--bg-surface); color:var(--text-secondary); font-size:14px; font-weight:600;
+    font-family:'JetBrains Mono', monospace; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .18s ease;
+  }
+  .page-btn:hover:not(:disabled){ border-color:var(--accent-teal); color:var(--text-primary); }
+  .page-btn.active{ background:var(--text-primary); color:var(--bg-canvas); border-color:var(--text-primary); }
+  .page-btn:disabled{ opacity:.4; cursor:not-allowed; }
+  .page-ellipsis{ color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size:13px; padding:0 4px; }
+
+  footer{ border-top:1px solid var(--border); padding:40px 0 30px; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; max-width:900px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .foot-bottom{ padding:0 20px; } }
+  .foot-bottom a:hover{ color:var(--accent-amber); }
+  .foot-links{ display:flex; gap:20px; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
+    <ul class="nav-links">
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="photography.html">Photography</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="pj-hero">
+  <div class="wrap">
+    <span class="eyebrow">things I've built</span>
+    <h1 class="pj-title">All <em>Projects</em>.</h1>
+    <p class="pj-sub">Web apps, tools, and experiments made while learning to build things properly.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <p class="result-count"><span id="result-count">0</span> projects</p>
+  <div class="project-list" id="project-list"></div>
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>
+  <div class="foot-bottom">
+    <span>© 2026 Aperture Log. Built entry by entry.</span>
+    <div class="foot-links">
+      <a href="terms&condition.html">Terms</a>
+      <a href="privacypolicy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
+  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  /* ---------------------------------------------------------
+     PROJECT DATA — swap this array for a Firestore query later.
+     --------------------------------------------------------- */
+  const PROJECTS = [
+    { title:'Trailmark', status:'live', desc:'A hiking-log app that pins your photos to the exact trail coordinates where you shot them, then builds a map of your year outdoors.', tags:['React','Node.js','MongoDB'], github:'#', demo:'#' },
+    { title:'Recon Buddy', status:'progress', desc:'A CLI tool that automates the boring first steps of a security assessment — subdomain sweep, port scan, and a clean summary report.', tags:['Python','Bash','Nmap'], github:'#' },
+    { title:'Aperture Log', status:'live', desc:'This very site — a growing personal blog and portfolio built to hold every interest without forcing a single niche.', tags:['React','Tailwind','Firebase'], github:'#', demo:'#' },
+    { title:'FocusStack', status:'live', desc:'A minimal Pomodoro and task tracker built to replace the four different productivity apps I kept abandoning.', tags:['JavaScript','IndexedDB'], github:'#', demo:'#' },
+    { title:'SkyLog', status:'progress', desc:'A small weather-triggered notifier that pings me when conditions look promising for a sunrise shoot near home.', tags:['Python','OpenWeather API'], github:'#' },
+    { title:'CampusBoard', status:'live', desc:'A lightweight noticeboard for classmates to share deadlines and notes, built after one too many missed submission dates.', tags:['Next.js','Firebase'], github:'#', demo:'#' },
+    { title:'PixelSort CLI', status:'live', desc:'A command-line tool that recreates the pixel-sorting glitch effect, built as a weekend excuse to learn image buffers.', tags:['Python','Pillow'], github:'#', demo:'#' },
+    { title:'Nightwatch', status:'progress', desc:'A log-parsing script that flags unusual SSH login attempts on a home server and sends a daily summary.', tags:['Python','Regex','Cron'], github:'#' },
+    { title:'StudyStack', status:'live', desc:'Flashcard app with spaced repetition, built because the existing options felt heavier than what I actually needed.', tags:['React','LocalStorage'], github:'#', demo:'#' },
+    { title:'QuietRoute', status:'progress', desc:'A route-planning experiment that scores walking paths by estimated noise and greenery instead of just distance.', tags:['JavaScript','Leaflet','Maps API'], github:'#' },
+    { title:'GitDigest', status:'live', desc:'A small script that emails me a weekly summary of commits across my repos so nothing quietly goes stale.', tags:['Node.js','GitHub API'], github:'#', demo:'#' },
+    { title:'Monsoon Tracker', status:'live', desc:'A personal dashboard plotting rainfall and cloud cover near home during monsoon season, built for photo planning.', tags:['Python','Flask','Chart.js'], github:'#', demo:'#' },
+    { title:'Typeset', status:'progress', desc:'A tiny Markdown-to-PDF tool tuned specifically for formatting my own article drafts before publishing.', tags:['Node.js','Puppeteer'], github:'#' },
+    { title:'ShelfNote', status:'live', desc:'A book-log app for tracking what I\'m reading and pulling quotes into short reviews without the social-network noise.', tags:['React','Firebase'], github:'#', demo:'#' }
+  ];
+
+  const PER_PAGE = 6;
+  let currentPage = 1;
+  const listEl = document.getElementById('project-list');
+  const resultCount = document.getElementById('result-count');
+  const paginationEl = document.getElementById('pagination');
+
+  const STATUS_LABEL = { live:'Live', progress:'In progress' };
+  const STATUS_CLASS = { live:'status-live', progress:'status-progress' };
+
+  function renderList(){
+    const totalPages = Math.max(1, Math.ceil(PROJECTS.length / PER_PAGE));
+    if(currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * PER_PAGE;
+    const pageItems = PROJECTS.slice(start, start + PER_PAGE);
+
+    listEl.innerHTML = '';
+    pageItems.forEach((p, i) => {
+      const row = document.createElement('div');
+      row.className = 'proj-row';
+      row.innerHTML = `
+        <div class="proj-index">${String(start + i + 1).padStart(2,'0')}</div>
+        <div class="proj-main">
+          <div class="proj-top-row">
+            <h3 class="proj-title">${p.title}</h3>
+            <span class="status-pill ${STATUS_CLASS[p.status]}">${STATUS_LABEL[p.status]}</span>
+          </div>
+          <p class="proj-desc">${p.desc}</p>
+          <div class="tag-row">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+        <div class="proj-links">
+          ${p.github ? `<a href="${p.github}" class="proj-link-btn">GitHub →</a>` : ''}
+          ${p.demo ? `<a href="${p.demo}" class="proj-link-btn">Live demo →</a>` : ''}
+        </div>
+      `;
+      listEl.appendChild(row);
+    });
+
+    resultCount.textContent = PROJECTS.length;
+    renderPagination(totalPages);
+  }
+
+  function renderPagination(totalPages){
+    paginationEl.innerHTML = '';
+    paginationEl.classList.toggle('show', totalPages > 1);
+    if(totalPages <= 1) return;
+
+    function makeBtn(label, page, opts = {}){
+      const btn = document.createElement('button');
+      btn.className = 'page-btn' + (opts.active ? ' active' : '');
+      btn.innerHTML = label;
+      btn.disabled = !!opts.disabled;
+      btn.addEventListener('click', () => { currentPage = page; renderList(); listEl.scrollIntoView({behavior:'smooth', block:'start'}); });
+      return btn;
+    }
+
+    paginationEl.appendChild(makeBtn('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg> Prev', currentPage - 1, { disabled: currentPage === 1 }));
+
+    for(let p = 1; p <= totalPages; p++){
+      paginationEl.appendChild(makeBtn(p, p, { active: p === currentPage }));
+    }
+
+    paginationEl.appendChild(makeBtn('Next <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>', currentPage + 1, { disabled: currentPage === totalPages }));
+  }
+
+  renderList();
+</script>
+
+</body>
+</html>

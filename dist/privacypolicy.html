@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Privacy Policy | Aperture Log</title>
+<meta name="description" content="Privacy Policy for Aperture Log — how Niraj's personal blog and portfolio collects, uses, and protects visitor information, including cookies, analytics, and your rights.">
+<link rel="canonical" href="https://aperturelog.com/privacy">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Privacy Policy | Aperture Log">
+<meta property="og:description" content="How Aperture Log collects, uses, and protects visitor information, including cookies, analytics, and your privacy rights.">
+<meta property="og:url" content="https://aperturelog.com/privacy">
+<meta property="og:site_name" content="Aperture Log">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy",
+  "url": "https://aperturelog.com/privacy",
+  "isPartOf": { "@type": "WebSite", "name": "Aperture Log", "url": "https://aperturelog.com" },
+  "dateModified": "2026-07-13"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas:#0B0E14; --bg-surface:#12161F; --bg-surface-2:#171C26;
+    --border:rgba(243,241,234,0.09); --border-strong:rgba(243,241,234,0.16);
+    --text-primary:#F3F1EA; --text-secondary:#A6ADBB; --text-tertiary:#6B7280;
+    --accent-amber:#E8A33D; --accent-amber-dim:rgba(232,163,61,0.14);
+    --accent-teal:#5FD7C7; --accent-teal-dim:rgba(95,215,199,0.14);
+    --shadow-lift: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html.light{
+    --bg-canvas:#FAF8F3; --bg-surface:#FFFFFF; --bg-surface-2:#F2EFE7;
+    --border:rgba(20,20,20,0.08); --border-strong:rgba(20,20,20,0.14);
+    --text-primary:#161512; --text-secondary:#54524A; --text-tertiary:#8A8779;
+    --accent-amber:#C7791F; --accent-amber-dim:rgba(199,121,31,0.10);
+    --accent-teal:#1A9C89; --accent-teal-dim:rgba(26,156,137,0.10);
+    --shadow-lift: 0 20px 60px rgba(20,15,5,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg-canvas); color:var(--text-primary); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; }
+  a{color:inherit; text-decoration:none;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
+
+  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
+  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
+  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
+  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  .legal-hero{ padding:72px 0 44px; border-bottom:1px solid var(--border); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:22px; }
+  h1.legal-title{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(32px,5vw,50px); letter-spacing:-.01em; }
+  .legal-meta{ margin-top:16px; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-tertiary); }
+
+  .legal-layout{ display:grid; grid-template-columns:250px 1fr; gap:60px; padding:56px 0 100px; align-items:start; }
+  @media (max-width:900px){ .legal-layout{ grid-template-columns:1fr; gap:32px; } }
+
+  .toc{ position:sticky; top:96px; }
+  @media (max-width:900px){ .toc{ position:static; border:1px solid var(--border); border-radius:14px; padding:18px 20px; background:var(--bg-surface); } }
+  .toc-label{ font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-tertiary); margin-bottom:14px; display:block; }
+  .toc ol{ list-style:none; display:flex; flex-direction:column; gap:9px; counter-reset:toc; max-height:60vh; overflow-y:auto; }
+  @media (max-width:900px){ .toc ol{ max-height:none; } }
+  .toc ol li{ counter-increment:toc; font-size:13.5px; }
+  .toc ol a{ color:var(--text-secondary); display:flex; gap:8px; line-height:1.4; transition:color .15s ease; }
+  .toc ol a::before{ content:counter(toc) '.'; color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size:12px; flex-shrink:0; }
+  .toc ol a:hover, .toc ol a.active{ color:var(--accent-amber); }
+
+  .legal-content{ max-width:700px; }
+  .legal-content section{ padding-bottom:34px; margin-bottom:34px; border-bottom:1px solid var(--border); scroll-margin-top:96px; }
+  .legal-content section:last-child{ border-bottom:none; }
+  .legal-content h2{ font-family:'Fraunces', serif; font-weight:500; font-size:22px; margin-bottom:14px; display:flex; align-items:baseline; gap:10px; }
+  .legal-content h2 .num{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent-teal); font-weight:400; }
+  .legal-content p{ font-size:15.5px; line-height:1.75; color:var(--text-secondary); margin-bottom:12px; }
+  .legal-content p:last-child{ margin-bottom:0; }
+  .legal-content ul{ margin:12px 0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .legal-content ul li{ font-size:15px; line-height:1.65; color:var(--text-secondary); display:flex; gap:10px; }
+  .legal-content ul.plain li::before{ content:'—'; color:var(--text-tertiary); flex-shrink:0; }
+  .legal-content ul.check li::before{ content:'✓'; color:var(--accent-teal); font-weight:700; flex-shrink:0; }
+  .sub-label{ font-family:'JetBrains Mono', monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-tertiary); margin:16px 0 8px; }
+
+  .callout{ background:var(--accent-teal-dim); border:1px solid var(--border-strong); border-radius:12px; padding:16px 18px; font-size:14px; color:var(--text-secondary); margin-top:14px; line-height:1.6; }
+  .callout strong{ color:var(--text-primary); }
+
+  .service-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  @media (max-width:520px){ .service-grid{ grid-template-columns:1fr; } }
+  .service-chip{ display:flex; align-items:center; gap:10px; border:1px solid var(--border); border-radius:10px; padding:10px 14px; font-size:13.5px; color:var(--text-secondary); background:var(--bg-surface); }
+  .service-chip .sdot{ width:6px; height:6px; border-radius:50%; background:var(--accent-teal); flex-shrink:0; }
+
+  .contact-card{ border-radius:16px; padding:28px; background:var(--bg-surface); border:1px solid var(--border); text-align:center; }
+  .contact-card p{ margin-bottom:16px; }
+  .contact-email{ font-family:'JetBrains Mono', monospace; font-size:14.5px; color:var(--accent-amber); display:block; margin-bottom:18px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:11px; font-size:14px; font-weight:600; background:var(--text-primary); color:var(--bg-canvas); }
+  .btn:hover{ box-shadow:var(--shadow-lift); }
+
+  footer{ border-top:1px solid var(--border); padding:40px 0 30px; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; }
+  .foot-bottom a:hover{ color:var(--accent-amber); }
+  .foot-links{ display:flex; gap:20px; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
+    <ul class="nav-links">
+      <li><a href="articles.html">Articles</a></li>
+      <li><a href="photography.html">Photography</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="legal-hero">
+  <div class="wrap">
+    <span class="eyebrow">legal</span>
+    <h1 class="legal-title">Privacy Policy</h1>
+    <p class="legal-meta">Last updated: July 13, 2026 · Applies to all visitors of Aperture Log</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="legal-layout">
+
+    <aside class="toc">
+      <span class="toc-label">On this page</span>
+      <ol id="toc-list">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#information">Information We Collect</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#analytics">Google Analytics</a></li>
+        <li><a href="#search-console">Google Search Console</a></li>
+        <li><a href="#accounts">User Accounts</a></li>
+        <li><a href="#comments">Comments</a></li>
+        <li><a href="#contact-form">Contact Form</a></li>
+        <li><a href="#newsletter">Future Newsletter</a></li>
+        <li><a href="#ai">Artificial Intelligence</a></li>
+        <li><a href="#third-party">Third-Party Services</a></li>
+        <li><a href="#external-links">External Links</a></li>
+        <li><a href="#security">Data Security</a></li>
+        <li><a href="#rights">Your Rights</a></li>
+        <li><a href="#children">Children's Privacy</a></li>
+        <li><a href="#international">International Visitors</a></li>
+        <li><a href="#ads">Future Advertisements</a></li>
+        <li><a href="#changes">Changes to This Policy</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </aside>
+
+    <div class="legal-content">
+
+      <section id="introduction">
+        <h2><span class="num">01</span> Introduction</h2>
+        <p>Your privacy matters. This Privacy Policy explains what information may be collected when you visit Aperture Log, how it's used, stored, and protected, and the choices you have regarding your personal information.</p>
+        <p>By accessing or using this website, you agree to the practices described here. Aperture Log is a personal blog and portfolio created to share articles, projects, photography, tutorials, technology, travel experiences, and educational content.</p>
+      </section>
+
+      <section id="information">
+        <h2><span class="num">02</span> Information We Collect</h2>
+        <p>What's collected depends on how you interact with the website.</p>
+        <p class="sub-label">Information you voluntarily provide</p>
+        <p>When you use the contact form, leave a comment, subscribe to a future newsletter, or email me directly, you may provide:</p>
+        <ul class="plain">
+          <li>Name and email address</li>
+          <li>Username or profile photo, if applicable</li>
+          <li>Your message, and anything else you choose to share</li>
+        </ul>
+        <p>I only collect information that you voluntarily submit.</p>
+        <p class="sub-label">Information collected automatically</p>
+        <p>Like most modern websites, Aperture Log automatically collects some technical information to improve the site — browser and device type, approximate location, pages visited, time on page, referring site, and session duration. This is collected in aggregate and generally isn't used to personally identify visitors.</p>
+      </section>
+
+      <section id="cookies">
+        <h2><span class="num">03</span> Cookies</h2>
+        <p>Aperture Log uses cookies and similar technologies to remember preferences, improve performance, analyze visitor behavior, and measure traffic.</p>
+        <div class="callout">You can disable cookies through your browser settings. Some features may not work correctly if you do.</div>
+      </section>
+
+      <section id="analytics">
+        <h2><span class="num">04</span> Google Analytics</h2>
+        <p>This website uses Google Analytics to understand how visitors interact with it — pages visited, time on page, device and browser info, region, and traffic sources. Google Analytics uses cookies to generate anonymous statistical reports. For details, review Google's own Privacy Policy.</p>
+      </section>
+
+      <section id="search-console">
+        <h2><span class="num">05</span> Google Search Console</h2>
+        <p>Search Console is used to monitor performance in Google Search — indexing issues, search queries, and visibility. It does not collect personal information for marketing purposes.</p>
+      </section>
+
+      <section id="accounts">
+        <h2><span class="num">06</span> User Accounts</h2>
+        <p>In the future, Aperture Log may allow visitors to create accounts using Firebase Authentication, which may collect a name, email address, authentication identifier, and profile image. This is used only to provide account-related features.</p>
+        <p>Passwords are never stored directly by this website — authentication is securely managed by Firebase.</p>
+      </section>
+
+      <section id="comments">
+        <h2><span class="num">07</span> Comments</h2>
+        <p>If commenting is enabled, submitted information may include your name, username, comment, profile picture, and timestamp. Comments may be publicly visible, and spam, abusive, or inappropriate comments may be removed without notice.</p>
+      </section>
+
+      <section id="contact-form">
+        <h2><span class="num">08</span> Contact Form</h2>
+        <p>The Contact page collects your name, email address, subject, and message, used solely to respond to your inquiry. Messages may be securely stored using Firebase.</p>
+        <div class="callout"><strong>Your information is never sold or shared for advertising purposes.</strong></div>
+      </section>
+
+      <section id="newsletter">
+        <h2><span class="num">09</span> Future Newsletter</h2>
+        <p>Aperture Log may introduce a newsletter in the future. If you subscribe, your email will only be used for new articles, site updates, and important announcements. You can unsubscribe at any time — I will never send spam or sell your email address.</p>
+      </section>
+
+      <section id="ai">
+        <h2><span class="num">10</span> Artificial Intelligence</h2>
+        <p>Some articles or content on this website may be created, edited, or improved with the assistance of AI tools. Every piece is reviewed, edited, and approved before publication — AI is used as a productivity aid, not a replacement for human review.</p>
+      </section>
+
+      <section id="third-party">
+        <h2><span class="num">11</span> Third-Party Services</h2>
+        <p>This website may use trusted third-party services, including:</p>
+        <div class="service-grid">
+          <div class="service-chip"><span class="sdot"></span>Firebase</div>
+          <div class="service-chip"><span class="sdot"></span>Google Analytics</div>
+          <div class="service-chip"><span class="sdot"></span>Google Search Console</div>
+          <div class="service-chip"><span class="sdot"></span>GitHub</div>
+          <div class="service-chip"><span class="sdot"></span>Instagram</div>
+        </div>
+        <p style="margin-top:16px;">These services have their own privacy policies — I'd encourage you to review them before using their platforms.</p>
+      </section>
+
+      <section id="external-links">
+        <h2><span class="num">12</span> External Links</h2>
+        <p>Articles on Aperture Log may link to external websites. Once you leave this site, I'm not responsible for the content, privacy practices, or policies of third-party websites. Please review their privacy policies separately.</p>
+      </section>
+
+      <section id="security">
+        <h2><span class="num">13</span> Data Security</h2>
+        <p>Reasonable technical and organizational measures are used to protect your information, including secure HTTPS connections, Firebase Authentication, secure database rules, access restrictions, and regular security updates.</p>
+        <p>That said, no method of electronic storage or transmission is completely secure. While I strive to protect your information, I can't guarantee absolute security.</p>
+      </section>
+
+      <section id="rights">
+        <h2><span class="num">14</span> Your Rights</h2>
+        <p>Depending on your country and applicable privacy laws, you may have the right to:</p>
+        <ul class="check">
+          <li>Request access to your personal information</li>
+          <li>Request correction of inaccurate information</li>
+          <li>Request deletion of your information</li>
+          <li>Withdraw consent, where applicable</li>
+          <li>Request details about how your data is stored</li>
+        </ul>
+        <p>To exercise any of these rights, reach out through the Contact page.</p>
+      </section>
+
+      <section id="children">
+        <h2><span class="num">15</span> Children's Privacy</h2>
+        <p>Aperture Log is not intended for children under the age of 13, and I do not knowingly collect personal information from children. If you believe a child has submitted personal information through this website, please contact me right away so it can be addressed.</p>
+      </section>
+
+      <section id="international">
+        <h2><span class="num">16</span> International Visitors</h2>
+        <p>Aperture Log welcomes visitors from around the world. By using this website, you understand that your information may be processed and stored in accordance with the laws governing this website.</p>
+      </section>
+
+      <section id="ads">
+        <h2><span class="num">17</span> Future Advertisements</h2>
+        <p>Aperture Log may display advertisements in the future, such as through Google AdSense. Advertising partners may use cookies to display relevant ads. If advertising is introduced, this policy will be updated to reflect it.</p>
+      </section>
+
+      <section id="changes">
+        <h2><span class="num">18</span> Changes to This Privacy Policy</h2>
+        <p>This policy may be updated periodically to reflect changes in website functionality, legal requirements, or privacy practices. The "Last Updated" date at the top always reflects the latest revision. Continued use of the website after updates means you accept the revised policy.</p>
+      </section>
+
+      <section id="contact">
+        <h2><span class="num">19</span> Contact</h2>
+        <div class="contact-card">
+          <p>Questions about this Privacy Policy or how your information is handled?</p>
+          <span class="contact-email">lex32547@gmail.com</span>
+          <div><a href="contact.html" class="btn">Contact page →</a></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Aperture Log. Built entry by entry.</span>
+      <div class="foot-links">
+        <a href="terms&Condition.html">Terms & Condition</a>
+        <a href="privacypolicy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
+  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  const sections = document.querySelectorAll('.legal-content section[id]');
+  const tocLinks = document.querySelectorAll('#toc-list a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        tocLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`#toc-list a[href="#${entry.target.id}"]`);
+        if(active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
