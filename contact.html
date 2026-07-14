@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact | Aperture Log</title>
+<meta name="description" content="Get in touch with Niraj — Computer Science student, developer, and photographer behind Aperture Log. Send a message, or connect on GitHub, Instagram, and LinkedIn.">
+<link rel="canonical" href="https://aperturelog.com/contact">
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | Aperture Log">
+<meta property="og:description" content="Send a message or connect on GitHub, Instagram, and LinkedIn.">
+<meta property="og:url" content="https://aperturelog.com/contact">
+<meta property="og:site_name" content="Aperture Log">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Aperture Log",
+  "url": "https://aperturelog.com/contact",
+  "isPartOf": { "@type": "WebSite", "name": "Aperture Log", "url": "https://aperturelog.com" }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas:#0B0E14; --bg-surface:#12161F; --bg-surface-2:#171C26;
+    --border:rgba(243,241,234,0.09); --border-strong:rgba(243,241,234,0.16);
+    --text-primary:#F3F1EA; --text-secondary:#A6ADBB; --text-tertiary:#6B7280;
+    --accent-amber:#E8A33D; --accent-amber-dim:rgba(232,163,61,0.14);
+    --accent-teal:#5FD7C7; --accent-teal-dim:rgba(95,215,199,0.14);
+    --danger:#E8746A; --danger-dim:rgba(232,116,106,0.12);
+    --shadow-lift: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html.light{
+    --bg-canvas:#FAF8F3; --bg-surface:#FFFFFF; --bg-surface-2:#F2EFE7;
+    --border:rgba(20,20,20,0.08); --border-strong:rgba(20,20,20,0.14);
+    --text-primary:#161512; --text-secondary:#54524A; --text-tertiary:#8A8779;
+    --accent-amber:#C7791F; --accent-amber-dim:rgba(199,121,31,0.10);
+    --accent-teal:#1A9C89; --accent-teal-dim:rgba(26,156,137,0.10);
+    --danger:#C4453B; --danger-dim:rgba(196,69,59,0.08);
+    --shadow-lift: 0 20px 60px rgba(20,15,5,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg-canvas); color:var(--text-primary); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; }
+  a{color:inherit; text-decoration:none;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
+
+  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
+  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
+  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
+  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .ct-hero{ padding:80px 0 50px; position:relative; background:radial-gradient(ellipse 900px 500px at 10% -10%, var(--accent-amber-dim), transparent 60%); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:22px; }
+  h1.ct-title{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(34px,5.4vw,58px); letter-spacing:-.01em; }
+  h1.ct-title em{ font-style:italic; color:var(--accent-amber); }
+  .ct-sub{ margin-top:18px; font-size:16.5px; color:var(--text-secondary); max-width:520px; line-height:1.7; }
+
+  /* ---------- Layout ---------- */
+  .ct-layout{ display:grid; grid-template-columns:1fr 0.85fr; gap:48px; padding:20px 0 100px; align-items:start; }
+  @media (max-width:940px){ .ct-layout{ grid-template-columns:1fr; gap:36px; } }
+
+  /* ---------- Form card ---------- */
+  .form-card{ background:var(--bg-surface); border:1px solid var(--border); border-radius:20px; padding:36px; }
+  @media (max-width:520px){ .form-card{ padding:24px; } }
+  .field{ margin-bottom:22px; }
+  .field label{ display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:var(--text-primary); }
+  .field .req{ color:var(--accent-amber); }
+  .field input, .field textarea{
+    width:100%; padding:13px 15px; border-radius:11px; border:1px solid var(--border-strong);
+    background:var(--bg-surface-2); color:var(--text-primary); font-size:14.5px; font-family:'Inter';
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input::placeholder, .field textarea::placeholder{ color:var(--text-tertiary); }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent-teal); box-shadow:0 0 0 3px var(--accent-teal-dim); }
+  .field textarea{ resize:vertical; min-height:140px; line-height:1.6; }
+  .field.error input, .field.error textarea{ border-color:var(--danger); }
+  .field-error{ display:none; font-size:12.5px; color:var(--danger); margin-top:7px; }
+  .field.error .field-error{ display:block; }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:520px){ .row-2{ grid-template-columns:1fr; } }
+  .char-count{ text-align:right; font-size:12px; color:var(--text-tertiary); margin-top:6px; font-family:'JetBrains Mono', monospace; }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 26px; border-radius:12px; font-size:14.5px; font-weight:600; cursor:pointer; border:1px solid transparent; transition:transform .18s ease, box-shadow .18s ease, opacity .2s ease; width:100%; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--text-primary); color:var(--bg-canvas); }
+  .btn-primary:hover{ box-shadow:var(--shadow-lift); }
+  .btn-primary:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+  .btn-primary .spinner{ display:none; width:15px; height:15px; border-radius:50%; border:2px solid rgba(11,14,20,0.25); border-top-color:var(--bg-canvas); animation:spin .7s linear infinite; }
+  .btn-primary.loading .spinner{ display:inline-block; }
+  .btn-primary.loading .btn-text{ opacity:.7; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .form-note{ font-size:12.5px; color:var(--text-tertiary); margin-top:16px; text-align:center; line-height:1.6; }
+
+  /* ---------- Status banner ---------- */
+  .status-banner{ display:none; align-items:flex-start; gap:12px; padding:16px 18px; border-radius:13px; margin-bottom:24px; font-size:14px; line-height:1.55; }
+  .status-banner.show{ display:flex; }
+  .status-banner.success{ background:var(--accent-teal-dim); border:1px solid var(--border-strong); color:var(--text-primary); }
+  .status-banner.fail{ background:var(--danger-dim); border:1px solid var(--border-strong); color:var(--text-primary); }
+  .status-banner svg{ flex-shrink:0; margin-top:2px; }
+  .status-banner.success svg{ color:var(--accent-teal); }
+  .status-banner.fail svg{ color:var(--danger); }
+
+  /* ---------- Side panel ---------- */
+  .side-panel{ display:flex; flex-direction:column; gap:16px; }
+  .info-card{ border:1px solid var(--border); border-radius:16px; padding:24px; background:var(--bg-surface); }
+  .info-card h3{ font-family:'Fraunces', serif; font-size:17px; margin-bottom:6px; }
+  .info-card p{ font-size:13.5px; color:var(--text-secondary); line-height:1.6; }
+  .direct-email{ display:flex; align-items:center; gap:12px; margin-top:14px; padding:12px 14px; border-radius:11px; background:var(--bg-surface-2); border:1px solid var(--border); font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent-amber); word-break:break-all; }
+  .direct-email svg{ flex-shrink:0; color:var(--text-tertiary); }
+
+  .social-list{ display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  .social-row{ display:flex; align-items:center; gap:12px; padding:11px 13px; border-radius:11px; border:1px solid var(--border); transition:border-color .2s ease, transform .2s ease; font-size:13.5px; }
+  .social-row:hover{ border-color:var(--accent-teal); transform:translateX(3px); }
+  .social-row svg{ flex-shrink:0; color:var(--text-secondary); }
+  .social-row span{ color:var(--text-secondary); font-family:'JetBrains Mono', monospace; font-size:12px; margin-left:auto; }
+
+  .response-note{ display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-tertiary); padding:2px 4px; }
+  .response-note .pulse-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-teal); box-shadow:0 0 0 4px var(--accent-teal-dim); }
+
+  footer{ border-top:1px solid var(--border); padding:40px 0 30px; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; }
+  .foot-bottom a:hover{ color:var(--accent-amber); }
+  .foot-links{ display:flex; gap:20px; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
+    <ul class="nav-links">
+      <li><a href="index.html#articles">Articles</a></li>
+      <li><a href="index.html#photography">Photography</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="ct-hero">
+  <div class="wrap">
+    <span class="eyebrow">get in touch</span>
+    <h1 class="ct-title">Let's <em>talk</em>.</h1>
+    <p class="ct-sub">Question about an article, want to collaborate on a project, or just want to say hello? Send a message — I read every one.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="ct-layout">
+
+    <div>
+      <div class="status-banner success" id="banner-success">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div><strong>Message sent.</strong> Thanks for reaching out — I'll get back to you soon.</div>
+      </div>
+      <div class="status-banner fail" id="banner-fail">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div><strong>Something went wrong.</strong> Please try again, or email me directly.</div>
+      </div>
+
+      <form class="form-card" id="contact-form" novalidate>
+        <div class="row-2">
+          <div class="field" id="field-name">
+            <label for="name">Name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name">
+            <div class="field-error">Please enter your name.</div>
+          </div>
+          <div class="field" id="field-email">
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email">
+            <div class="field-error">Please enter a valid email address.</div>
+          </div>
+        </div>
+
+        <div class="field" id="field-subject">
+          <label for="subject">Subject <span class="req">*</span></label>
+          <input type="text" id="subject" name="subject" placeholder="What's this about?">
+          <div class="field-error">Please add a subject.</div>
+        </div>
+
+        <div class="field" id="field-message">
+          <label for="message">Message <span class="req">*</span></label>
+          <textarea id="message" name="message" placeholder="Write your message here..." maxlength="1000"></textarea>
+          <div class="char-count"><span id="char-count">0</span> / 1000</div>
+          <div class="field-error">Please write a message (at least 10 characters).</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submit-btn">
+          <span class="spinner"></span>
+          <span class="btn-text">Send Message</span>
+        </button>
+
+        <p class="form-note">This form doesn't send anywhere yet — it's wired up and validating client-side, ready to connect to Firebase.</p>
+      </form>
+    </div>
+
+    <div class="side-panel">
+      <div class="info-card">
+        <h3>Prefer email?</h3>
+        <p>Reach me directly and I'll reply as soon as I can.</p>
+        <a href="mailto:lex32547@gmail.com" class="direct-email">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+          lex32547@gmail.com
+        </a>
+        <div class="response-note" style="margin-top:14px;"><span class="pulse-dot"></span> Usually replies within 2–3 days</div>
+      </div>
+
+      <div class="info-card">
+        <h3>Find me elsewhere</h3>
+        <p>Follow along or drop a message on any of these.</p>
+        <div class="social-list">
+          <a href="https://github.com/Niray32547y" class="social-row">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.73.8 1.17 1.83 1.17 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.08.78 2.18 0 1.58-.02 2.85-.02 3.24 0 .31.21.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg>
+            GitHub <span>@Niraj32547y</span>
+          </a>
+          <a href="https://instagram.com/niraj_856" class="social-row">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+            Instagram <span>@niraj_856</span>
+          </a>
+          <a href="https://linkedin.com/in/Niraj Acharjya" class="social-row">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.25h4V23h-4V8.25zM8.5 8.25h3.83v2h.05c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.11V23h-4v-6.72c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.25z"/></svg>
+            LinkedIn <span>Niraj Acharjya</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h3>Before you send a bug report</h3>
+        <p>Found something broken on the site? Include your browser and device — it helps me track it down faster.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Aperture Log. Built entry by entry.</span>
+      <div class="foot-links">
+        <a href="Terms&Condition.html">Terms & Condition</a>
+        <a href="Privacypolicy.html">Privacy Policy</a>
+        <a href="Contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
+  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  /* ---------------------------------------------------------
+     CONTACT FORM
+     Currently: validates client-side and simulates a submit.
+     To connect Firebase later:
+       1. Add the Firebase SDK + your config (Firestore or
+          Realtime Database) at the top of this script block.
+       2. In submitToBackend() below, replace the setTimeout
+          mock with something like:
+
+            import { getFirestore, collection, addDoc } from "firebase/firestore";
+            const db = getFirestore(app);
+            await addDoc(collection(db, "messages"), {
+              name: data.name, email: data.email,
+              subject: data.subject, message: data.message,
+              createdAt: new Date().toISOString()
+            });
+
+       3. Keep the try/catch so banner-success / banner-fail
+          still work the same way.
+     --------------------------------------------------------- */
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const bannerSuccess = document.getElementById('banner-success');
+  const bannerFail = document.getElementById('banner-fail');
+  const messageEl = document.getElementById('message');
+  const charCount = document.getElementById('char-count');
+
+  messageEl.addEventListener('input', () => {
+    charCount.textContent = messageEl.value.length;
+  });
+
+  function setFieldError(fieldId, hasError){
+    document.getElementById(fieldId).classList.toggle('error', hasError);
+  }
+
+  function validate(data){
+    let valid = true;
+    setFieldError('field-name', !data.name.trim());
+    if(!data.name.trim()) valid = false;
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
+    setFieldError('field-email', !emailOk);
+    if(!emailOk) valid = false;
+
+    setFieldError('field-subject', !data.subject.trim());
+    if(!data.subject.trim()) valid = false;
+
+    const messageOk = data.message.trim().length >= 10;
+    setFieldError('field-message', !messageOk);
+    if(!messageOk) valid = false;
+
+    return valid;
+  }
+
+  // Placeholder submit — swap the inside of this function for real Firebase calls.
+  function submitToBackend(data){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // Simulated success. Replace with an actual Firebase write + real error handling.
+        resolve(true);
+      }, 1100);
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    bannerSuccess.classList.remove('show');
+    bannerFail.classList.remove('show');
+
+    const data = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value
+    };
+
+    if(!validate(data)) return;
+
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
+
+    try{
+      await submitToBackend(data);
+      bannerSuccess.classList.add('show');
+      form.reset();
+      charCount.textContent = '0';
+      bannerSuccess.scrollIntoView({ behavior:'smooth', block:'start' });
+    }catch(err){
+      bannerFail.classList.add('show');
+      bannerFail.scrollIntoView({ behavior:'smooth', block:'start' });
+    }finally{
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>

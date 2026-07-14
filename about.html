@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Primary SEO -->
+<title>About Niraj — Developer, Photographer &amp; Lifelong Learner | Aperture Log</title>
+<meta name="description" content="I'm Niraj, a Computer Science and Engineering student from Assam, India. Aperture Log is where I document what I build, write, and photograph — technology, nature, and everything in between.">
+<link rel="canonical" href="https://aperturelog.com/about">
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="About Niraj — Developer, Photographer & Lifelong Learner">
+<meta property="og:description" content="A Computer Science student documenting his journey through code, photography, and curiosity — one article at a time.">
+<meta property="og:url" content="https://aperturelog.com/about">
+<meta property="og:site_name" content="Aperture Log">
+<meta property="og:image" content="https://picsum.photos/seed/apertureabout/1200/630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Niraj — Developer, Photographer & Lifelong Learner">
+<meta name="twitter:description" content="A Computer Science student from Assam, India documenting technology, photography, and everything he's learning.">
+<meta name="twitter:image" content="https://picsum.photos/seed/apertureabout/1200/630">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Niraj",
+    "jobTitle": "Computer Science and Engineering Student",
+    "description": "Computer Science and Engineering student from Assam, India, writing and photographing across technology, nature, and personal experience.",
+    "url": "https://aperturelog.com/about",
+    "sameAs": [
+      "https://github.com/",
+      "https://www.linkedin.com/",
+      "https://www.instagram.com/"
+    ],
+    "knowsAbout": ["Software Development", "Artificial Intelligence", "Cybersecurity", "Web Development", "Photography"],
+    "homeLocation": {
+      "@type": "Place",
+      "name": "Assam, India"
+    }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-canvas:#0B0E14;
+    --bg-surface:#12161F;
+    --bg-surface-2:#171C26;
+    --border:rgba(243,241,234,0.09);
+    --border-strong:rgba(243,241,234,0.16);
+    --text-primary:#F3F1EA;
+    --text-secondary:#A6ADBB;
+    --text-tertiary:#6B7280;
+    --accent-amber:#E8A33D;
+    --accent-amber-dim:rgba(232,163,61,0.14);
+    --accent-teal:#5FD7C7;
+    --accent-teal-dim:rgba(95,215,199,0.14);
+    --shadow-lift: 0 20px 60px rgba(0,0,0,0.45);
+  }
+  html.light{
+    --bg-canvas:#FAF8F3;
+    --bg-surface:#FFFFFF;
+    --bg-surface-2:#F2EFE7;
+    --border:rgba(20,20,20,0.08);
+    --border-strong:rgba(20,20,20,0.14);
+    --text-primary:#161512;
+    --text-secondary:#54524A;
+    --text-tertiary:#8A8779;
+    --accent-amber:#C7791F;
+    --accent-amber-dim:rgba(199,121,31,0.10);
+    --accent-teal:#1A9C89;
+    --accent-teal-dim:rgba(26,156,137,0.10);
+    --shadow-lift: 0 20px 60px rgba(20,15,5,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ background:var(--bg-canvas); color:var(--text-primary); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; transition:background .35s ease, color .35s ease; overflow-x:hidden; }
+  ::selection{ background:var(--accent-amber); color:#0B0E14; }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .serif{font-family:'Fraunces', serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
+
+  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; letter-spacing:.01em; }
+  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
+  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
+  .nav-links a{ transition:color .2s ease; }
+  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
+  .nav-right{ display:flex; align-items:center; gap:14px; }
+  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
+  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
+  @media (max-width:860px){ .nav-links{ display:none; } }
+
+  /* ---------- About hero ---------- */
+  .abt-hero{ padding:96px 0 70px; position:relative; background:radial-gradient(ellipse 900px 500px at 85% -10%, var(--accent-teal-dim), transparent 60%); }
+  .abt-hero-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center; }
+  @media (max-width:860px){ .abt-hero-grid{ grid-template-columns:1fr; gap:36px; } }
+  .abt-photo{ position:relative; border-radius:22px; overflow:hidden; aspect-ratio:4/5; border:1px solid var(--border); }
+  .abt-photo img{ width:100%; height:100%; object-fit:cover; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:24px; }
+  h1.abt-headline{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(34px,5.4vw,58px); line-height:1.08; letter-spacing:-.01em; }
+  h1.abt-headline em{ font-style:italic; color:var(--accent-amber); }
+  .abt-sub{ margin-top:20px; font-size:17px; color:var(--text-secondary); line-height:1.7; max-width:520px; }
+  .loc-row{ display:flex; align-items:center; gap:8px; margin-top:22px; font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-tertiary); }
+
+  /* ---------- Article-style sections ---------- */
+  .abt-body{ max-width:760px; margin:0 auto; padding:20px 32px 40px; }
+  @media (max-width:640px){ .abt-body{ padding:20px 20px 40px; } }
+  .lede{ font-family:'Fraunces', serif; font-style:italic; font-size:24px; line-height:1.55; color:var(--text-primary); margin-bottom:52px; padding-bottom:36px; border-bottom:1px solid var(--border); }
+  .abt-section{ margin-bottom:52px; }
+  .abt-section h2{ font-family:'Fraunces', serif; font-weight:500; font-size:26px; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+  .abt-section p{ font-size:16px; line-height:1.8; color:var(--text-secondary); margin-bottom:14px; }
+  .abt-section p:last-child{ margin-bottom:0; }
+  .abt-section strong{ color:var(--text-primary); font-weight:600; }
+
+  /* Topic cards */
+  .topic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:24px; }
+  @media (max-width:560px){ .topic-grid{ grid-template-columns:1fr; } }
+  .topic-card{ border:1px solid var(--border); border-radius:14px; padding:20px; background:var(--bg-surface); transition:border-color .2s ease, transform .2s ease; }
+  .topic-card:hover{ border-color:var(--accent-teal); transform:translateY(-3px); }
+  .topic-card .t-icon{ font-size:20px; margin-bottom:10px; display:block; }
+  .topic-card h3{ font-family:'Fraunces', serif; font-size:16.5px; font-weight:600; margin-bottom:6px; }
+  .topic-card p{ font-size:13.5px; color:var(--text-secondary); line-height:1.6; margin:0; }
+
+  /* Goals checklist */
+  .goal-list{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-top:20px; }
+  .goal-list li{ display:flex; align-items:flex-start; gap:12px; font-size:15.5px; color:var(--text-secondary); line-height:1.6; }
+  .goal-list svg{ flex-shrink:0; margin-top:3px; color:var(--accent-teal); }
+
+  /* Pull quote */
+  .pull-quote{ font-family:'Fraunces', serif; font-style:italic; font-size:22px; line-height:1.6; color:var(--text-primary); text-align:center; padding:8px 20px; margin:52px 0; position:relative; }
+  .pull-quote::before, .pull-quote::after{ content:''; display:block; width:36px; height:1px; background:var(--accent-amber); margin:0 auto 18px; }
+  .pull-quote::after{ margin:18px auto 0; }
+
+  /* Connect CTA */
+  .connect-card{ border-radius:20px; padding:48px; text-align:center; background:linear-gradient(135deg, var(--accent-amber-dim), var(--accent-teal-dim)); border:1px solid var(--border-strong); margin-top:8px; }
+  .connect-card h2{ font-family:'Fraunces', serif; font-size:clamp(22px,3vw,30px); margin-bottom:12px; }
+  .connect-card p{ color:var(--text-secondary); max-width:460px; margin:0 auto 26px; line-height:1.7; }
+  .connect-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:12px; font-size:14.5px; font-weight:600; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; border:1px solid transparent; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--text-primary); color:var(--bg-canvas); }
+  .btn-primary:hover{ box-shadow:var(--shadow-lift); }
+  .btn-ghost{ background:var(--bg-surface); border-color:var(--border-strong); color:var(--text-primary); }
+  .btn-ghost:hover{ border-color:var(--accent-teal); }
+  .sign-off{ font-family:'Fraunces', serif; font-style:italic; font-size:19px; margin-top:40px; text-align:center; color:var(--text-secondary); }
+
+  footer{ border-top:1px solid var(--border); padding:44px 0 32px; margin-top:60px; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; }
+  .foot-bottom .socials{ display:flex; gap:16px; }
+  .foot-bottom .socials a{ color:var(--text-tertiary); }
+  .foot-bottom .socials a:hover{ color:var(--accent-teal); }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="scroll-bar"></div>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
+    <ul class="nav-links">
+      <li><a href="index.html#articles">Articles</a></li>
+      <li><a href="index.html#categories">Categories</a></li>
+      <li><a href="index.html#photography">Photography</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="abt-hero">
+  <div class="wrap">
+    <div class="abt-hero-grid">
+      <div class="abt-photo">
+        <img src="https://picsum.photos/seed/nirajabout/700/875" alt="Niraj, Computer Science student and photographer">
+      </div>
+      <div>
+        <span class="eyebrow">about · vol. 01</span>
+        <h1 class="abt-headline">Hi, I'm <em>Niraj</em>. 👋</h1>
+        <p class="abt-sub">A Computer Science and Engineering student with a curiosity for technology, photography, and the endless process of learning something new every day.</p>
+        <div class="loc-row">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Assam, India
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<article class="abt-body">
+
+  <p class="lede">This website is more than a blog — it's where I document my journey, share what I build, write about what inspires me, and preserve the moments I capture through my camera.</p>
+
+  <section class="abt-section">
+    <h2>Why I created this</h2>
+    <p>Social media is great for quick updates, but ideas tend to disappear into endless scrolling. I wanted one place to slow down — to write meaningful articles, showcase my projects, share my photography, and document my growth over the years.</p>
+    <p>Think of it as my digital notebook. My goal isn't to impress anyone with how much I know — it's to share what I'm learning, and hopefully help someone else along the way.</p>
+  </section>
+
+  <section class="abt-section">
+    <h2>What you'll find here</h2>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="t-icon">💻</span>
+        <h3>Technology</h3>
+        <p>Programming, AI, cybersecurity, and web development — everything that fuels my curiosity as a CS student.</p>
+      </div>
+      <div class="topic-card">
+        <span class="t-icon">📸</span>
+        <h3>Photography</h3>
+        <p>Nature, landscapes, skies, rain, and everyday moments — every photograph has a story behind it.</p>
+      </div>
+      <div class="topic-card">
+        <span class="t-icon">🌍</span>
+        <h3>Travel &amp; Nature</h3>
+        <p>Hidden places and peaceful landscapes, including the quiet beauty of Northeast India.</p>
+      </div>
+      <div class="topic-card">
+        <span class="t-icon">🚀</span>
+        <h3>Projects</h3>
+        <p>The sites, apps, and ideas I build while learning and experimenting with new technology.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="abt-section">
+    <h2>My journey</h2>
+    <p>Every expert was once a beginner. I'm still learning, still making mistakes, and still discovering new things every day — so instead of waiting until I know everything, I've decided to <strong>learn in public.</strong></p>
+    <p>This website is a record of that: from my first lines of code to future projects, from my earliest photographs to the moments that shape who I become. Years from now, I hope to look back at these pages and see how far I've come.</p>
+  </section>
+
+  <p class="pull-quote">"Curiosity is one of the greatest skills anyone can develop — and it doesn't stop after college."</p>
+
+  <section class="abt-section">
+    <h2>Current goals</h2>
+    <ul class="goal-list">
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Become a skilled software engineer</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Build useful, meaningful web applications</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Improve my photography and storytelling</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Share knowledge through articles and tutorials</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Create projects that solve real-world problems</li>
+    </ul>
+  </section>
+
+  <section class="abt-section">
+    <h2>Beyond the screen</h2>
+    <p>When I'm not coding, you'll probably find me exploring nature with my phone camera, watching dramatic monsoon skies, photographing details most people walk past, or planning the next thing I want to build.</p>
+  </section>
+
+  <div class="connect-card">
+    <h2>Let's connect</h2>
+    <p>Whether you're here to read an article, browse my photography, or just say hello — I'm genuinely glad you're here. I don't claim to know everything, but I promise to stay curious and share what I discover along the way.</p>
+    <div class="connect-actions">
+      <a href="Contact.html" class="btn btn-primary">Get in touch</a>
+      <a href="index.html#articles" class="btn btn-ghost">Read the articles</a>
+    </div>
+  </div>
+
+  <p class="sign-off">See you around. — Niraj</p>
+
+</article>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom">
+      <span>© 2026 Aperture Log. Built entry by entry.</span>
+      <div class="socials">
+        <a href="https://github.com/Niray32547y" title="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.58.24 2.75.12 3.04.73.8 1.17 1.83 1.17 3.08 0 4.41-2.69 5.38-5.25 5.67.42.36.78 1.08.78 2.18 0 1.58-.02 2.85-.02 3.24 0 .31.21.67.8.56A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5z"/></svg></a>
+        <a href="https://instagram.com/niraj_856" title="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1"/></svg></a>
+        <a href="https://linkedin.com/in/Niraj Acharjya" title="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.25h4V23h-4V8.25zM8.5 8.25h3.83v2h.05c.53-1 1.84-2.06 3.78-2.06 4.04 0 4.79 2.66 4.79 6.11V23h-4v-6.72c0-1.6-.03-3.66-2.23-3.66-2.24 0-2.58 1.75-2.58 3.55V23h-4V8.25z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
+  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
+  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+
+  const bar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+</script>
+
+</body>
+</html>
