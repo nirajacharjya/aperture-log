@@ -12,6 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
   <style>
     :root {
       --bg-canvas: #0B0E14;
@@ -111,7 +112,7 @@
       transition: width .1s linear;
     }
 
-    /* ---------- Nav ---------- */
+    /* ---------- Nav ----------
     header {
       position: sticky;
       top: 0;
@@ -149,16 +150,16 @@
       box-shadow: 0 0 0 4px var(--accent-amber-dim);
     }
 
-    .nav-links{
-    display:flex;
-    align-items:center;
-    gap:26px;
-    list-style:none;
-    font-size:14px;
-    color:var(--text-secondary);
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-secondary);
 
-    margin-left:auto;
-}
+      margin-left: auto;
+    }
 
     .nav-links a {
       transition: color .2s ease;
@@ -169,12 +170,12 @@
       color: var(--text-primary);
     }
 
-    .nav-right{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-left:32px;
-}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 32px;
+    }
 
     .search-btn,
     .theme-btn {
@@ -211,93 +212,147 @@
       }
     }
 
-    .auth-area{
+    .auth-area {
 
-display:flex;
+      display: flex;
 
-align-items:center;
+      align-items: center;
 
-}
-.login-btn{
+    }
 
-    display:flex;
+    .mobile-menu {
 
-    align-items:center;
+      display: none;
 
-    justify-content:center;
+      flex-direction: column;
 
-    gap:10px;
+      background: var(--bg-surface);
 
-    min-width:140px;
+      border-top: 1px solid var(--border);
 
-    height:52px;
+    }
 
-    padding:0 22px;
+    .mobile-menu a {
 
-    border-radius:14px;
+      padding: 16px 32px;
 
-    background:var(--bg-surface);
+      border-bottom: 1px solid var(--border);
 
-    border:1px solid var(--border);
+      color: var(--text-primary);
 
-    color:var(--text-primary);
+      transition: .2s;
 
-    font-size:17px;
+    }
 
-    font-weight:600;
+    .mobile-menu a:hover {
 
-    cursor:pointer;
+      background: var(--bg-surface-2);
 
-    transition:
+    }
+
+    .mobile-menu.show {
+
+      display: flex;
+
+    }
+
+    @media(min-width:861px) {
+
+      .mobile-menu {
+
+        display: none !important;
+
+      }
+
+    }
+
+    .login-btn {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      min-width: 140px;
+
+      height: 52px;
+
+      padding: 0 22px;
+
+      border-radius: 14px;
+
+      background: var(--bg-surface);
+
+      border: 1px solid var(--border);
+
+      color: var(--text-primary);
+
+      font-size: 17px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
         background .25s,
         border-color .25s,
         transform .25s,
         color .25s;
 
-}
-@media (max-width:768px){
-    .login-btn{
-        min-width:110px;
-        height:40px;
-        padding:0 14px;
-        gap:6px;
-        font-size:15px;
-        border-radius:12px;
     }
-}
-.login-btn:hover{
-   background:var(--accent-teal);
-    border-color:var(--accent-teal);
-    color:white;
-    transform:translateY(-2px);
-}
-.profile-menu{
-    display:none;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    min-width:170px;
-    height:52px;
-    padding:0 18px;
-    border-radius:14px;
-    background:var(--bg-surface);
-    border:1px solid var(--border);
-    cursor:pointer;
-    transition:.25s;
-}
-.profile-menu:hover{
-    border-color:var(--accent-teal);
-}
-.profile-menu img{
-width:38px;
-height:38px;
-border-radius:50%;
-object-fit:cover;
-}
-.profile-menu span{
-font-size:14px;
-font-weight:600;
-}
+
+    @media (max-width:768px) {
+      .login-btn {
+        min-width: 110px;
+        height: 40px;
+        padding: 0 14px;
+        gap: 6px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+    }
+
+    .login-btn:hover {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .profile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 170px;
+      height: 52px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .profile-menu:hover {
+      border-color: var(--accent-teal);
+    }
+
+    .profile-menu img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-menu span {
+      font-size: 14px;
+      font-weight: 600;
+    } */
+
     /* ---------- Hero ---------- */
     .hero {
       position: relative;
@@ -1089,68 +1144,67 @@ font-weight:600;
 
   <div id="scroll-bar"></div>
 
-  <header>
-   <nav>
-  <a href="#" class="brand">
-    <span class="dot"></span>
-    Aperture Log
-  </a>
+  <!-- <header>
+    <nav>
+      <a href="#" class="brand">
+        <span class="dot"></span>
+        Aperture Log
+      </a>
 
-  <ul class="nav-links">
-    <li><a href="articles.html">Blog</a></li>
-    <li><a href="#">Stories</a></li>
-    <li><a href="photography.html">Photography</a></li>
-    <li><a href="project.html">Projects</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
+      <ul class="nav-links">
+        <li><a href="articles.html">Blog</a></li>
+        <li><a href="stories.html">Stories</a></li>
+        <li><a href="photography.html">Photography</a></li>
+        <li><a href="project.html">Projects</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
 
-  <div class="nav-right">
+      <div class="nav-right">
 
-    <div class="auth-area">
+        <div class="auth-area">
 
-      <button class="login-btn" id="loginBtn">
-        👤 Sign In
-      </button>
+          <button class="login-btn" id="loginBtn">
+            👤 Sign In
+          </button>
 
-      <div class="profile-menu" id="profileMenu">
-        <img id="profileImage" src="" alt="Profile">
-        <span id="profileName">User</span>
+          <div class="profile-menu" id="profileMenu">
+            <img id="profileImage" src="" alt="Profile">
+            <span id="profileName">User</span>
+          </div>
+
+        </div>
+
+        <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+          <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </div>
+
+        <div class="search-btn mobile-toggle" id="menu-toggle" title="Menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <line x1="4" y1="7" x2="20" y2="7" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="17" x2="20" y2="17" />
+          </svg>
+        </div>
+
       </div>
 
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="articles.html">Blog</a>
+      <a href="stories.html">Stories</a>
+      <a href="photography.html">Photography</a>
+      <a href="project.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
     </div>
-
-    <div class="theme-btn" id="theme-toggle" title="Toggle theme">
-      <svg id="theme-icon"
-           width="16"
-           height="16"
-           viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2"
-           stroke-linecap="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-    </div>
-
-    <div class="search-btn mobile-toggle" title="Menu">
-      <svg width="16"
-           height="16"
-           viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2"
-           stroke-linecap="round">
-        <line x1="4" y1="7" x2="20" y2="7"/>
-        <line x1="4" y1="12" x2="20" y2="12"/>
-        <line x1="4" y1="17" x2="20" y2="17"/>
-      </svg>
-    </div>
-
-  </div>
-
-</nav>
-  </header>
+  </header> -->
+  <div id="navbar"></div>
 
   <section class="hero">
     <div class="hero-inner">
@@ -1417,7 +1471,7 @@ font-weight:600;
             <li><a href="articles.html">Articles</a></li>
             <li><a href="photography.html">Photography</a></li>
             <li><a href="projects.html">Projects</a></li>
-            <li><a href="#">Stories</a></li>
+            <li><a href="stories.html">Stories</a></li>
           </ul>
         </div>
         <div>
@@ -1489,7 +1543,8 @@ font-weight:600;
       <polyline points="5 12 12 5 19 12" />
     </svg>
   </div>
- <script type="module" src="js/index.js"></script>
+  <script type="module" src="/js/navbar.js"></script>
+  <script type="module" src="js/index.js"></script>
 </body>
 
 </html>
