@@ -127,7 +127,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 32px;
-      max-width: 1180px;
+      max-width: 1240px;
       margin: 0 auto;
     }
 
@@ -149,14 +149,16 @@
       box-shadow: 0 0 0 4px var(--accent-amber-dim);
     }
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      list-style: none;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
+    .nav-links{
+    display:flex;
+    align-items:center;
+    gap:26px;
+    list-style:none;
+    font-size:14px;
+    color:var(--text-secondary);
+
+    margin-left:auto;
+}
 
     .nav-links a {
       transition: color .2s ease;
@@ -167,11 +169,12 @@
       color: var(--text-primary);
     }
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .nav-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-left:32px;
+}
 
     .search-btn,
     .theme-btn {
@@ -225,7 +228,7 @@ align-items:center;
 
     gap:10px;
 
-    min-width:155px;
+    min-width:140px;
 
     height:52px;
 
@@ -252,73 +255,49 @@ align-items:center;
         color .25s;
 
 }
-
+@media (max-width:768px){
+    .login-btn{
+        min-width:110px;
+        height:40px;
+        padding:0 14px;
+        gap:6px;
+        font-size:15px;
+        border-radius:12px;
+    }
+}
 .login-btn:hover{
-
-    background:var(--accent-teal);
-
+   background:var(--accent-teal);
     border-color:var(--accent-teal);
-
     color:white;
-
     transform:translateY(-2px);
-
 }
-
 .profile-menu{
-
     display:none;
-
     align-items:center;
-
     justify-content:center;
-
     gap:10px;
-
     min-width:170px;
-
     height:52px;
-
     padding:0 18px;
-
     border-radius:14px;
-
     background:var(--bg-surface);
-
     border:1px solid var(--border);
-
     cursor:pointer;
-
     transition:.25s;
-
 }
-
 .profile-menu:hover{
-
     border-color:var(--accent-teal);
-
 }
-
 .profile-menu img{
-
 width:38px;
-
 height:38px;
-
 border-radius:50%;
-
 object-fit:cover;
-
 }
-
 .profile-menu span{
-
 font-size:14px;
-
 font-weight:600;
-
 }
-
     /* ---------- Hero ---------- */
     .hero {
       position: relative;
@@ -1112,55 +1091,66 @@ font-weight:600;
   <div id="scroll-bar"></div>
 
   <header>
-    <nav>
-      <a href="#" class="brand"><span class="dot"></span>Aperture Log</a>
-      <ul class="nav-links">
-        <li><a href="articles.html">Articles</a></li>
-        <li><a href="#">Stories</a></li>
-        <li><a href="photography.html">Photography</a></li>
-        <li><a href="project.html">Projects</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="nav-right">
-        <div class="auth-area">
+   <nav>
+  <a href="#" class="brand">
+    <span class="dot"></span>
+    Aperture Log
+  </a>
 
-          <button class="login-btn" id="loginBtn">
+  <ul class="nav-links">
+    <li><a href="articles.html">Blog</a></li>
+    <li><a href="#">Stories</a></li>
+    <li><a href="photography.html">Photography</a></li>
+    <li><a href="project.html">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
 
-            👤 Sign In
+  <div class="nav-right">
 
-          </button>
+    <div class="auth-area">
 
-          <div class="profile-menu" id="profileMenu">
+      <button class="login-btn" id="loginBtn">
+        👤 Sign In
+      </button>
 
-            <img id="profileImage" src="" alt="Profile">
-
-            <span id="profileName">
-
-              User
-
-            </span>
-
-          </div>
-
-        </div>
+      <div class="profile-menu" id="profileMenu">
+        <img id="profileImage" src="" alt="Profile">
+        <span id="profileName">User</span>
       </div>
-      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
-        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      </div>
-      <div class="search-btn mobile-toggle" title="Menu">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round">
-          <line x1="4" y1="7" x2="20" y2="7" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="17" x2="20" y2="17" />
-        </svg>
-      </div>
-      </div>
-    </nav>
+
+    </div>
+
+    <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+      <svg id="theme-icon"
+           width="16"
+           height="16"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2"
+           stroke-linecap="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </div>
+
+    <div class="search-btn mobile-toggle" title="Menu">
+      <svg width="16"
+           height="16"
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2"
+           stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"/>
+        <line x1="4" y1="12" x2="20" y2="12"/>
+        <line x1="4" y1="17" x2="20" y2="17"/>
+      </svg>
+    </div>
+
+  </div>
+
+</nav>
   </header>
 
   <section class="hero">
@@ -1170,7 +1160,7 @@ font-weight:600;
       <p class="hero-sub">A personal blog where I share what I learn, build, discover, and experience — one entry at a
         time.</p>
       <div class="hero-actions">
-        <a href="#articles" class="btn btn-primary">Read Articles</a>
+        <a href="#articles" class="btn btn-primary">Read Blog</a>
         <a href="#photography" class="btn btn-ghost">Explore Gallery</a>
         <a href="#projects" class="btn btn-ghost">View Projects</a>
       </div>
@@ -1192,9 +1182,9 @@ font-weight:600;
       <div class="section-head">
         <div>
           <span class="section-label">01 — Latest writing</span>
-          <h2 class="section-title">Recent Articles</h2>
+          <h2 class="section-title">Latest Blog Posts</h2>
         </div>
-        <a href="articles.html" class="section-link">View all articles →</a>
+        <a href="articles.html" class="section-link">View all posts →</a>
       </div>
       <div class="grid-articles">
 
@@ -1246,7 +1236,7 @@ font-weight:600;
           </div>
         </article>
 
-        <article class="card">
+        <!-- <article class="card">
           <div class="card-media">
             <img src="https://picsum.photos/seed/aperturedesk/700/440" alt="Minimal desk setup with notebook">
             <span class="card-cat">Productivity</span>
@@ -1293,7 +1283,7 @@ font-weight:600;
               <div class="avatar"></div> Written by me
             </div>
           </div>
-        </article>
+        </article> -->
 
       </div>
     </section>
