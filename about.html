@@ -22,6 +22,7 @@
 <meta name="twitter:title" content="About Niraj — Developer, Photographer & Lifelong Learner">
 <meta name="twitter:description" content="A Computer Science student from Assam, India documenting technology, photography, and everything he's learning.">
 <meta name="twitter:image" content="https://picsum.photos/seed/apertureabout/1200/630">
+<link rel="stylesheet" href="/css/navbar.css">
 
 <!-- Structured data -->
 <script type="application/ld+json">
@@ -95,18 +96,6 @@
 
   #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
 
-  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
-  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
-  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; letter-spacing:.01em; }
-  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
-  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
-  .nav-links a{ transition:color .2s ease; }
-  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
-  .nav-right{ display:flex; align-items:center; gap:14px; }
-  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
-  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
-  @media (max-width:860px){ .nav-links{ display:none; } }
-
   /* ---------- About hero ---------- */
   .abt-hero{ padding:96px 0 70px; position:relative; background:radial-gradient(ellipse 900px 500px at 85% -10%, var(--accent-teal-dim), transparent 60%); }
   .abt-hero-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:60px; align-items:center; }
@@ -173,25 +162,7 @@
 <body>
 
 <div id="scroll-bar"></div>
-
-<header>
-  <nav>
-    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
-    <ul class="nav-links">
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="#">Stories</a></li>
-      <li><a href="photography.html">Photography</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
-        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </div>
-    </div>
-  </nav>
-</header>
+<div id="navbar"></div>
 
 <section class="abt-hero">
   <div class="wrap">
@@ -298,21 +269,8 @@
   </div>
 </footer>
 
-<script>
-  const root = document.documentElement;
-  const themeBtn = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
-  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
-  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
-
-  const bar = document.getElementById('scroll-bar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-  });
-</script>
+<script type="module" src="/js/navbar.js"></script>
+<script src="/js/about.js"></script>
 
 </body>
 </html>

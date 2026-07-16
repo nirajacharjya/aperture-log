@@ -14,6 +14,7 @@
 <meta property="og:description" content="Send a message or connect on GitHub, Instagram, and LinkedIn.">
 <meta property="og:url" content="https://aperturelog.com/contact">
 <meta property="og:site_name" content="Aperture Log">
+<link rel="stylesheet" href="/css/navbar.css">
 
 <script type="application/ld+json">
 {
@@ -55,16 +56,6 @@
   @media (max-width:640px){ .wrap{ padding:0 20px; } }
 
   #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
-
-  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
-  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
-  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
-  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
-  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
-  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
-  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
-  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
-  @media (max-width:860px){ .nav-links{ display:none; } }
 
   /* ---------- Hero ---------- */
   .ct-hero{ padding:80px 0 50px; position:relative; background:radial-gradient(ellipse 900px 500px at 10% -10%, var(--accent-amber-dim), transparent 60%); }
@@ -148,24 +139,7 @@
 
 <div id="scroll-bar"></div>
 
-<header>
-  <nav>
-    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
-    <ul class="nav-links">
-      <li><a href="articles.html">Articles</a></li>
-      <li><a href="photography.html">Photography</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
-        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </div>
-    </div>
-  </nav>
-</header>
-
+<div id="navbar"></div>
 <section class="ct-hero">
   <div class="wrap">
     <span class="eyebrow">get in touch</span>
@@ -275,118 +249,8 @@
   </div>
 </footer>
 
-<script>
-  const root = document.documentElement;
-  const themeBtn = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
-  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
-  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
-
-  const bar = document.getElementById('scroll-bar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-  });
-
-  /* ---------------------------------------------------------
-     CONTACT FORM
-     Currently: validates client-side and simulates a submit.
-     To connect Firebase later:
-       1. Add the Firebase SDK + your config (Firestore or
-          Realtime Database) at the top of this script block.
-       2. In submitToBackend() below, replace the setTimeout
-          mock with something like:
-
-            import { getFirestore, collection, addDoc } from "firebase/firestore";
-            const db = getFirestore(app);
-            await addDoc(collection(db, "messages"), {
-              name: data.name, email: data.email,
-              subject: data.subject, message: data.message,
-              createdAt: new Date().toISOString()
-            });
-
-       3. Keep the try/catch so banner-success / banner-fail
-          still work the same way.
-     --------------------------------------------------------- */
-
-  const form = document.getElementById('contact-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const bannerSuccess = document.getElementById('banner-success');
-  const bannerFail = document.getElementById('banner-fail');
-  const messageEl = document.getElementById('message');
-  const charCount = document.getElementById('char-count');
-
-  messageEl.addEventListener('input', () => {
-    charCount.textContent = messageEl.value.length;
-  });
-
-  function setFieldError(fieldId, hasError){
-    document.getElementById(fieldId).classList.toggle('error', hasError);
-  }
-
-  function validate(data){
-    let valid = true;
-    setFieldError('field-name', !data.name.trim());
-    if(!data.name.trim()) valid = false;
-
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim());
-    setFieldError('field-email', !emailOk);
-    if(!emailOk) valid = false;
-
-    setFieldError('field-subject', !data.subject.trim());
-    if(!data.subject.trim()) valid = false;
-
-    const messageOk = data.message.trim().length >= 10;
-    setFieldError('field-message', !messageOk);
-    if(!messageOk) valid = false;
-
-    return valid;
-  }
-
-  // Placeholder submit — swap the inside of this function for real Firebase calls.
-  function submitToBackend(data){
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulated success. Replace with an actual Firebase write + real error handling.
-        resolve(true);
-      }, 1100);
-    });
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    bannerSuccess.classList.remove('show');
-    bannerFail.classList.remove('show');
-
-    const data = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      subject: document.getElementById('subject').value,
-      message: document.getElementById('message').value
-    };
-
-    if(!validate(data)) return;
-
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
-
-    try{
-      await submitToBackend(data);
-      bannerSuccess.classList.add('show');
-      form.reset();
-      charCount.textContent = '0';
-      bannerSuccess.scrollIntoView({ behavior:'smooth', block:'start' });
-    }catch(err){
-      bannerFail.classList.add('show');
-      bannerFail.scrollIntoView({ behavior:'smooth', block:'start' });
-    }finally{
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-    }
-  });
-</script>
+<script type="module" src="/js/navbar.js"></script>
+<script src="/js/contact.js"></script>
 
 </body>
 </html>

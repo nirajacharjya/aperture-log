@@ -15,6 +15,7 @@
 <meta property="og:url" content="https://aperturelog.com/articles">
 <meta property="og:site_name" content="Aperture Log">
 <meta property="og:image" content="https://picsum.photos/seed/aperturearticles/1200/630">
+<link rel="stylesheet" href="/css/navbar.css">
 
 <script type="application/ld+json">
 {
@@ -55,17 +56,6 @@
   @media (max-width:640px){ .wrap{ padding:0 20px; } }
 
   #scroll-bar{ position:fixed; top:0; left:0; height:2px; width:0%; background:linear-gradient(90deg, var(--accent-amber), var(--accent-teal)); z-index:200; transition:width .1s linear; }
-
-  header{ position:sticky; top:0; z-index:100; backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%); background:color-mix(in srgb, var(--bg-canvas) 78%, transparent); border-bottom:1px solid var(--border); }
-  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
-  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces', serif; font-weight:500; font-size:19px; }
-  .brand .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent-amber); box-shadow:0 0 0 4px var(--accent-amber-dim); }
-  .nav-links{ display:flex; align-items:center; gap:30px; list-style:none; font-size:14px; color:var(--text-secondary); }
-  .nav-links a:hover, .nav-links a.active{ color:var(--text-primary); }
-  .theme-btn{ display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg-surface); cursor:pointer; color:var(--text-secondary); transition:all .2s ease; }
-  .theme-btn:hover{ color:var(--text-primary); border-color:var(--border-strong); }
-  @media (max-width:860px){ .nav-links{ display:none; } }
-
   .art-hero{ padding:80px 0 20px; position:relative; background:radial-gradient(ellipse 900px 500px at 90% -10%, var(--accent-teal-dim), transparent 60%); }
   .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:.06em; color:var(--accent-amber); text-transform:uppercase; padding:6px 12px; border:1px solid var(--border-strong); border-radius:100px; background:var(--bg-surface); margin-bottom:22px; }
   h1.art-title{ font-family:'Fraunces', serif; font-weight:400; font-size:clamp(34px,5.4vw,58px); letter-spacing:-.01em; }
@@ -104,7 +94,7 @@
   .no-results.show{ display:block; }
 
   /* ---------- Pagination ---------- */
-  .pagination{ display:none; align-items:center; justify-content:center; gap:8px; padding:10px 0 90px; flex-wrap:wrap; }
+  /* .pagination{ display:none; align-items:center; justify-content:center; gap:8px; padding:10px 0 90px; flex-wrap:wrap; }
   .pagination.show{ display:flex; }
   .page-btn{
     min-width:40px; height:40px; padding:0 12px; border-radius:10px; border:1px solid var(--border-strong);
@@ -115,42 +105,25 @@
   .page-btn:hover:not(:disabled){ border-color:var(--accent-teal); color:var(--text-primary); }
   .page-btn.active{ background:var(--text-primary); color:var(--bg-canvas); border-color:var(--text-primary); }
   .page-btn:disabled{ opacity:.4; cursor:not-allowed; }
-  .page-ellipsis{ color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size:13px; padding:0 4px; }
+  .page-ellipsis{ color:var(--text-tertiary); font-family:'JetBrains Mono', monospace; font-size:13px; padding:0 4px; }*/
 
   footer{ border-top:1px solid var(--border); padding:40px 0 30px; }
   .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--text-tertiary); flex-wrap:wrap; gap:16px; }
   .foot-bottom a:hover{ color:var(--accent-amber); }
   .foot-links{ display:flex; gap:20px; }
 
-  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ transition:none !important; } } 
 </style>
 </head>
 <body>
 
 <div id="scroll-bar"></div>
 
-<header>
-  <nav>
-    <a href="index.html" class="brand"><span class="dot"></span>Aperture Log</a>
-    <ul class="nav-links">
-      <li><a href="articles.html" class="active">Articles</a></li>
-      <li><a href="photography.html">Photography</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <div class="theme-btn" id="theme-toggle" title="Toggle theme">
-        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </div>
-    </div>
-  </nav>
-</header>
-
+<div id="navbar"></div>
 <section class="art-hero">
   <div class="wrap">
     <span class="eyebrow">writing</span>
-    <h1 class="art-title">All <em>Articles</em>.</h1>
+    <h1 class="art-title">All <em>Blog Post</em>.</h1>
     <p class="art-sub">Notes on technology, photography, and everything in between — search or filter by category to find what you're after.</p>
   </div>
 </section>
@@ -172,7 +145,7 @@
     </div>
   </div>
 
-  <p class="result-count"><span id="result-count">12</span> articles</p>
+  <!-- <p class="result-count"><span id="result-count">12</span> articles</p>
 
   <div class="grid-articles" id="articles-grid">
 
@@ -324,7 +297,7 @@
   <div class="no-results" id="no-results">No articles match your search. Try a different keyword or category.</div>
 
   <div class="pagination" id="pagination"></div>
-</div>
+</div> -->
 
 <footer>
   <div class="wrap">
@@ -339,117 +312,8 @@
   </div>
 </footer>
 
-<script>
-  const root = document.documentElement;
-  const themeBtn = document.getElementById('theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-  const sunPath = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
-  const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  function setTheme(light){ root.classList.toggle('light', light); themeIcon.innerHTML = light ? sunPath : moonPath; }
-  themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
-
-  const bar = document.getElementById('scroll-bar');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-  });
-
-  const cards = Array.from(document.querySelectorAll('#articles-grid .card'));
-  const searchInput = document.getElementById('search-input');
-  const filterPills = document.querySelectorAll('.filter-pill');
-  const resultCount = document.getElementById('result-count');
-  const noResults = document.getElementById('no-results');
-  const paginationEl = document.getElementById('pagination');
-  const articlesGrid = document.getElementById('articles-grid');
-  let activeCat = 'all';
-  const PER_PAGE = 6;
-  let currentPage = 1;
-
-  function getFiltered(){
-    const q = searchInput.value.trim().toLowerCase();
-    return cards.filter(card => {
-      const matchesCat = activeCat === 'all' || card.dataset.cat === activeCat;
-      const matchesSearch = !q || card.dataset.title.includes(q);
-      return matchesCat && matchesSearch;
-    });
-  }
-
-  function renderPagination(totalPages){
-    paginationEl.innerHTML = '';
-    paginationEl.classList.toggle('show', totalPages > 1);
-    if(totalPages <= 1) return;
-
-    function makeBtn(label, page, opts = {}){
-      const btn = document.createElement('button');
-      btn.className = 'page-btn' + (opts.active ? ' active' : '');
-      btn.innerHTML = label;
-      btn.disabled = !!opts.disabled;
-      btn.addEventListener('click', () => goToPage(page));
-      return btn;
-    }
-
-    paginationEl.appendChild(makeBtn(
-      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg> Prev',
-      currentPage - 1, { disabled: currentPage === 1 }
-    ));
-
-    const pageNumbers = [];
-    for(let p = 1; p <= totalPages; p++){
-      if(p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1) pageNumbers.push(p);
-      else if(pageNumbers[pageNumbers.length - 1] !== '...') pageNumbers.push('...');
-    }
-    pageNumbers.forEach(p => {
-      if(p === '...'){
-        const span = document.createElement('span');
-        span.className = 'page-ellipsis';
-        span.textContent = '···';
-        paginationEl.appendChild(span);
-      } else {
-        paginationEl.appendChild(makeBtn(p, p, { active: p === currentPage }));
-      }
-    });
-
-    paginationEl.appendChild(makeBtn(
-      'Next <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>',
-      currentPage + 1, { disabled: currentPage === totalPages }
-    ));
-  }
-
-  function goToPage(page){
-    currentPage = page;
-    applyFilters(false);
-    articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function applyFilters(resetPage = true){
-    if(resetPage) currentPage = 1;
-    const filtered = getFiltered();
-    const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-    if(currentPage > totalPages) currentPage = totalPages;
-
-    const start = (currentPage - 1) * PER_PAGE;
-    const end = start + PER_PAGE;
-
-    cards.forEach(card => card.style.display = 'none');
-    filtered.slice(start, end).forEach(card => card.style.display = '');
-
-    resultCount.textContent = filtered.length;
-    noResults.classList.toggle('show', filtered.length === 0);
-    renderPagination(totalPages);
-  }
-
-  filterPills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      filterPills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      activeCat = pill.dataset.cat;
-      applyFilters();
-    });
-  });
-
-  searchInput.addEventListener('input', () => applyFilters());
-  applyFilters();
-</script>
+<script type="module" src="/js/navbar.js"></script>
+<script src="/js/articles.js"></script>
 
 </body>
 </html>
