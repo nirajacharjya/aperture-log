@@ -11,7 +11,11 @@ import {
   getDocs,
   serverTimestamp,
   query,
-  orderBy
+  orderBy,
+  doc,
+  getDoc,
+  runTransaction,
+  increment
 } from "firebase/firestore";
 
 
@@ -185,6 +189,10 @@ function showPhoto() {
   lbCamera.textContent = "Unknown";
   lbLens.textContent = "Unknown";
   lbSettings.textContent = "Not provided";
+
+  commentInput.value = "";
+  loadReactions(photo.id);
+  loadComments(photo.id);
 }
 
 document.getElementById('lb-close').addEventListener('click', closeLightbox);
@@ -604,3 +612,256 @@ async function loadPhotos() {
 }
 
 loadPhotos();
+
+/* ==========================================================
+   Reactions
+   ----------------------------------------------------------
+   Data model:
+     photos/{photoId}.reactions = { heart: 3, haha: 1, wow: 0, clap: 2, fire: 5 }
+     photos/{photoId}/reactedUsers/{uid} = { emoji: "heart" }
+
+   One reaction per signed-in user per photo. Clicking the same
+   emoji again removes it; clicking a different emoji switches
+   it. Counts are updated atomically with a transaction so two
+   people reacting at the same moment can't corrupt the count.
+========================================================== */
+
+const REACTIONS = [
+  { key: "heart", emoji: "❤️" },
+  { key: "haha", emoji: "😂" },
+  { key: "wow", emoji: "😮" },
+  { key: "clap", emoji: "👏" },
+  { key: "fire", emoji: "🔥" }
+];
+
+const lbReactions = document.getElementById("lb-reactions");
+
+let currentReactionCounts = {};
+let currentUserReaction = null;
+
+function renderReactions() {
+
+  const signedIn = !!auth.currentUser;
+
+  const buttons = REACTIONS.map((r) => {
+
+    const count = Math.max(0, currentReactionCounts[r.key] || 0);
+    const active = currentUserReaction === r.key;
+
+    return `
+      <button type="button" class="reaction-btn${active ? " active" : ""}" data-key="${r.key}">
+        <span class="r-emoji">${r.emoji}</span><span class="r-count">${count}</span>
+      </button>
+    `;
+
+  }).join("");
+
+  lbReactions.innerHTML = signedIn
+    ? buttons
+    : buttons + `<div class="reaction-signin-hint">Sign in to react</div>`;
+
+}
+
+async function loadReactions(photoId) {
+
+  currentReactionCounts = {};
+  currentUserReaction = null;
+
+  try {
+
+    const photoSnap = await getDoc(doc(db, "photos", photoId));
+
+    if (photoSnap.exists()) {
+      currentReactionCounts = photoSnap.data().reactions || {};
+    }
+
+    if (auth.currentUser) {
+
+      const userSnap = await getDoc(
+        doc(db, "photos", photoId, "reactedUsers", auth.currentUser.uid)
+      );
+
+      if (userSnap.exists()) {
+        currentUserReaction = userSnap.data().emoji;
+      }
+
+    }
+
+  } catch (error) {
+
+    console.error("Failed to load reactions:", error);
+
+  }
+
+  renderReactions();
+
+}
+
+async function toggleReaction(photoId, emojiKey) {
+
+  const photoRef = doc(db, "photos", photoId);
+  const userReactionRef = doc(db, "photos", photoId, "reactedUsers", auth.currentUser.uid);
+
+  try {
+
+    await runTransaction(db, async (tx) => {
+
+      const userSnap = await tx.get(userReactionRef);
+      const prevKey = userSnap.exists() ? userSnap.data().emoji : null;
+      const updates = {};
+
+      if (prevKey === emojiKey) {
+
+        // Same emoji clicked again — remove the reaction
+        updates[`reactions.${emojiKey}`] = increment(-1);
+        tx.update(photoRef, updates);
+        tx.delete(userReactionRef);
+
+      } else {
+
+        // New reaction, or switching from a different emoji
+        if (prevKey) {
+          updates[`reactions.${prevKey}`] = increment(-1);
+        }
+
+        updates[`reactions.${emojiKey}`] = increment(1);
+        tx.update(photoRef, updates);
+        tx.set(userReactionRef, { emoji: emojiKey });
+
+      }
+
+    });
+
+    await loadReactions(photoId);
+
+  } catch (error) {
+
+    console.error("Failed to update reaction:", error);
+    alert("Couldn't save your reaction. Please try again.");
+
+  }
+
+}
+
+lbReactions.addEventListener("click", async (e) => {
+
+  const btn = e.target.closest(".reaction-btn");
+  if (!btn) return;
+
+  const photo = currentPageItems[lightboxIdx];
+  if (!photo) return;
+
+  if (!auth.currentUser) {
+    alert("Please sign in to react to a photo.");
+    return;
+  }
+
+  await toggleReaction(photo.id, btn.dataset.key);
+
+});
+
+/* ==========================================================
+   Comments
+   ----------------------------------------------------------
+   Stored as a subcollection: photos/{photoId}/comments
+   Each comment: { text, userId, userName, userPhoto, createdAt }
+========================================================== */
+
+const commentList = document.getElementById("comment-list");
+const commentForm = document.getElementById("comment-form");
+const commentInput = document.getElementById("comment-input");
+
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+async function loadComments(photoId) {
+
+  commentList.innerHTML = `<p class="comment-empty">Loading comments...</p>`;
+
+  try {
+
+    const q = query(
+      collection(db, "photos", photoId, "comments"),
+      orderBy("createdAt", "desc")
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      commentList.innerHTML = `<p class="comment-empty">No comments yet — be the first to say something.</p>`;
+      return;
+    }
+
+    commentList.innerHTML = snapshot.docs.map((docSnap) => {
+
+      const c = docSnap.data();
+      const name = c.userName || "Anonymous";
+      const initials = name.charAt(0).toUpperCase();
+      const avatarInner = c.userPhoto
+        ? `<img src="${c.userPhoto}" alt="${name}">`
+        : initials;
+
+      const timeStr = c.createdAt
+        ? c.createdAt.toDate().toLocaleDateString("en-US", { month: "short", day: "numeric" })
+        : "just now";
+
+      return `
+        <div class="comment-item">
+          <div class="comment-avatar">${avatarInner}</div>
+          <div class="comment-body">
+            <span class="comment-name">${escapeHTML(name)}</span><span class="comment-time">${timeStr}</span>
+            <p class="comment-text">${escapeHTML(c.text)}</p>
+          </div>
+        </div>
+      `;
+
+    }).join("");
+
+  } catch (error) {
+
+    console.error("Failed to load comments:", error);
+    commentList.innerHTML = `<p class="comment-empty">Couldn't load comments right now.</p>`;
+
+  }
+
+}
+
+commentForm.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const photo = currentPageItems[lightboxIdx];
+  if (!photo) return;
+
+  const text = commentInput.value.trim();
+  if (!text) return;
+
+  if (!auth.currentUser) {
+    alert("Please sign in to comment.");
+    return;
+  }
+
+  try {
+
+    await addDoc(collection(db, "photos", photo.id, "comments"), {
+      text,
+      userId: auth.currentUser.uid,
+      userName: auth.currentUser.displayName || "Anonymous",
+      userPhoto: auth.currentUser.photoURL || "",
+      createdAt: serverTimestamp()
+    });
+
+    commentInput.value = "";
+    await loadComments(photo.id);
+
+  } catch (error) {
+
+    console.error("Failed to post comment:", error);
+    alert("Could not post your comment. Please try again.");
+
+  }
+
+});
