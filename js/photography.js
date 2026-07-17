@@ -417,6 +417,66 @@ uploadForm.addEventListener("submit", (e) => {
   startFakeUpload();
 
 });
+/**
+ * Resizes and compresses an image file in the browser before upload.
+ * This matters a lot on mobile: phone camera photos are often
+ * 5-20MB, which can exceed Cloudinary's unsigned upload size limit
+ * and is much more likely to time out on a slow mobile connection.
+ * Shrinking to a sane max dimension + JPEG quality fixes both.
+ */
+function compressImage(file, maxDimension = 1920, quality = 0.82) {
+  return new Promise((resolve, reject) => {
+
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+
+      URL.revokeObjectURL(objectUrl);
+
+      let { width, height } = img;
+
+      if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Could not process this image."));
+            return;
+          }
+          resolve(new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }));
+        },
+        "image/jpeg",
+        quality
+      );
+
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("This file couldn't be read as an image."));
+    };
+
+    img.src = objectUrl;
+
+  });
+}
+
 async function startFakeUpload() {
 
   const uploadBtn = document.querySelector(".submit-upload");
@@ -429,14 +489,24 @@ async function startFakeUpload() {
         Uploading...
     `;
 
-  const file = photoInput.files[0];
-
-  const formData = new FormData();
-
-  formData.append("file", file);
-  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+  const rawFile = photoInput.files[0];
 
   try {
+
+    // Reject absurdly large files outright (e.g. 50MB+ RAW-ish exports)
+    // before even attempting to compress/upload them.
+    if (rawFile.size > 25 * 1024 * 1024) {
+      throw new Error("That image is too large (over 25MB). Please choose a smaller photo.");
+    }
+
+    uploadBtn.innerHTML = `<span class="spinner"></span> Preparing image...`;
+    const file = await compressImage(rawFile);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    uploadBtn.innerHTML = `<span class="spinner"></span> Uploading...`;
 
     const response = await fetch(
       `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -449,6 +519,10 @@ async function startFakeUpload() {
     const data = await response.json();
 
     console.log(data);
+
+    if (!response.ok || data.error || !data.secure_url) {
+      throw new Error(data.error?.message || "Cloudinary rejected the upload.");
+    }
 
     console.log("Image URL:", data.secure_url);
 
@@ -489,7 +563,7 @@ async function startFakeUpload() {
 
     console.error(error);
 
-    alert("Upload Failed");
+    alert(`Upload failed: ${error.message || "Please check your connection and try again."}`);
 
   } finally {
 
