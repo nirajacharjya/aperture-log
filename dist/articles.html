@@ -138,6 +138,7 @@
     </div>
     <div class="filter-row" id="filter-row">
       <button class="filter-pill active" data-cat="all">All</button>
+      <button class="filter-pill" data-cat="personal">Personal Stories</button>
       <button class="filter-pill" data-cat="ai">Artificial Intelligence</button>
       <button class="filter-pill" data-cat="photography">Photography</button>
       <button class="filter-pill" data-cat="cybersecurity">Cybersecurity</button>
@@ -147,150 +148,20 @@
     </div>
   </div>
 
-  <!-- <p class="result-count"><span id="result-count">12</span> articles</p>
+  <p class="result-count"><span id="result-count">1</span> blog post</p>
 
   <div class="grid-articles" id="articles-grid">
 
-    <a class="card" data-cat="ai" data-title="what building a tiny transformer taught me about attention" href="article.html">
+    <a class="card" data-cat="personal" data-title="welcome to aperture log the beginning of my photography journey" href="Blogpost01.html?post=welcome-to-aperture-log">
       <div class="card-media">
-        <img src="https://picsum.photos/seed/apertureai/700/440" alt="Abstract render of a neural network">
-        <span class="card-cat">Artificial Intelligence</span>
+        <img src="/assets/Image1-DwJiTWch.JPG" alt="A smartphone photograph of a quiet sky, representing the start of the Aperture Log photography journey">
+        <span class="card-cat">Personal Stories</span>
       </div>
       <div class="card-body">
-        <div class="card-meta"><span>6 min read</span><span>·</span><span>Jul 09, 2026</span></div>
-        <h3 class="card-title">What Building a Tiny Transformer Taught Me About Attention</h3>
-        <p class="card-desc">Notes from implementing self-attention from scratch — the bugs, the "aha" moments, and why the math finally clicked on the third rewrite.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="photography" data-title="chasing blue hour three mornings on the same ridge" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturemtn/700/440" alt="Mountain ridge at dawn">
-        <span class="card-cat">Photography</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>4 min read</span><span>·</span><span>Jul 03, 2026</span></div>
-        <h3 class="card-title">Chasing Blue Hour: Three Mornings on the Same Ridge</h3>
-        <p class="card-desc">Same trail, three sunrises, three completely different skies — and what I changed in-camera each time to chase them.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="cybersecurity" data-title="my first ctf everything i got wrong before getting it right" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturesec/700/440" alt="Terminal with security scan output">
-        <span class="card-cat">Cybersecurity</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>8 min read</span><span>·</span><span>Jun 27, 2026</span></div>
-        <h3 class="card-title">My First CTF: Everything I Got Wrong Before Getting It Right</h3>
-        <p class="card-desc">A walkthrough of a beginner capture-the-flag competition, and the reconnaissance habit that finally made things click.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="productivity" data-title="the two list system that fixed my semester" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturedesk/700/440" alt="Minimal desk setup with notebook">
-        <span class="card-cat">Productivity</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>5 min read</span><span>·</span><span>Jun 21, 2026</span></div>
-        <h3 class="card-title">The Two-List System That Fixed My Semester</h3>
-        <p class="card-desc">Why splitting "urgent" from "important" into physically separate lists changed how I actually get through a study week.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="webdev" data-title="rebuilding this site for the third time and why thats fine" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturecode/700/440" alt="Code editor with colorful syntax highlighting">
-        <span class="card-cat">Web Development</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>7 min read</span><span>·</span><span>Jun 14, 2026</span></div>
-        <h3 class="card-title">Rebuilding This Site for the Third Time (and Why That's Fine)</h3>
-        <p class="card-desc">A behind-the-scenes look at the stack powering this blog, and the tradeoffs I made to keep it simple enough to actually maintain.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="travel" data-title="slow trains what a 14 hour ride taught me about patience" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturetravel/700/440" alt="Train station platform with motion blur">
-        <span class="card-cat">Travel</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>6 min read</span><span>·</span><span>Jun 08, 2026</span></div>
-        <h3 class="card-title">Slow Trains: What a 14-Hour Ride Taught Me About Patience</h3>
-        <p class="card-desc">Skipping the flight for a night train across the country — and the strange, unhurried clarity that came with it.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="ai" data-title="prompt engineering habits that actually stuck" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturellm/700/440" alt="Laptop screen showing an AI chat interface">
-        <span class="card-cat">Artificial Intelligence</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>5 min read</span><span>·</span><span>Jun 02, 2026</span></div>
-        <h3 class="card-title">Prompt Engineering Habits That Actually Stuck</h3>
-        <p class="card-desc">The handful of small habits that made my prompts noticeably more reliable, and the ones I dropped after they stopped helping.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="photography" data-title="what monsoon season taught me about patience and light" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturemonsoon/700/440" alt="Dramatic monsoon clouds over a green landscape">
-        <span class="card-cat">Photography</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>5 min read</span><span>·</span><span>May 27, 2026</span></div>
-        <h3 class="card-title">What Monsoon Season Taught Me About Patience and Light</h3>
-        <p class="card-desc">Waiting hours for a single break in the clouds, and why the shots I almost didn't take turned out to be the best ones.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="cybersecurity" data-title="setting up a home lab for security practice on a student budget" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/aperturehomelab/700/440" alt="Small home server rack setup">
-        <span class="card-cat">Cybersecurity</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>7 min read</span><span>·</span><span>May 20, 2026</span></div>
-        <h3 class="card-title">Setting Up a Home Lab for Security Practice on a Student Budget</h3>
-        <p class="card-desc">What I actually needed to start practicing — and the expensive gear I convinced myself I didn't.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="webdev" data-title="things i wish i knew before my first internship interview" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/apertureinterview/700/440" alt="Person typing on a laptop before an interview">
-        <span class="card-cat">Student Life</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>4 min read</span><span>·</span><span>May 14, 2026</span></div>
-        <h3 class="card-title">Things I Wish I Knew Before My First Internship Interview</h3>
-        <p class="card-desc">The questions that caught me off guard, and how I'd prepare differently if I could do it over.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="travel" data-title="a weekend in shillong with nothing planned" href="article.html">
-      <div class="card-media">
-        <img src="https://picsum.photos/seed/apertureshillong/700/440" alt="Misty hills of Shillong, Meghalaya">
-        <span class="card-cat">Travel</span>
-      </div>
-      <div class="card-body">
-        <div class="card-meta"><span>6 min read</span><span>·</span><span>May 07, 2026</span></div>
-        <h3 class="card-title">A Weekend in Shillong With Nothing Planned</h3>
-        <p class="card-desc">What happens when you skip the itinerary entirely and just follow whichever road looks interesting.</p>
-        <div class="card-foot">Read article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        <div class="card-meta"><span>4 min read</span><span>·</span><span>Jul 20, 2026</span></div>
+        <h3 class="card-title">Welcome to Aperture Log: The Beginning of My Photography Journey</h3>
+        <p class="card-desc">Why I started this site — a personal space to share smartphone photography, travel moments, and web development updates, one story at a time.</p>
+        <div class="card-foot">Read post <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
       </div>
     </a>
 
@@ -299,7 +170,7 @@
   <div class="no-results" id="no-results">No articles match your search. Try a different keyword or category.</div>
 
   <div class="pagination" id="pagination"></div>
-</div> -->
+</div>
 
 <footer>
   <div class="wrap">

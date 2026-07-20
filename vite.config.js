@@ -8,6 +8,7 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         about: resolve(__dirname, "about.html"),
         articles: resolve(__dirname, "articles.html"),
+        article: resolve(__dirname, "Blogpost01.html"),
         photography: resolve(__dirname, "photography.html"),
         projects: resolve(__dirname, "projects.html"),
         contact: resolve(__dirname, "contact.html"),
