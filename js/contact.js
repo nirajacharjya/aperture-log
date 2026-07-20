@@ -1,3 +1,16 @@
+import { db, auth } from "./firebase.js";
+
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "firebase/firestore";
+
+import emailjs from "@emailjs/browser";
+
+// Initialize EmailJS
+emailjs.init("z-aCOye4Wqke6RNY1");
+
 const bar = document.getElementById('scroll-bar');
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
@@ -32,6 +45,23 @@ const bar = document.getElementById('scroll-bar');
   const messageEl = document.getElementById('message');
   const charCount = document.getElementById('char-count');
 
+  auth.onAuthStateChanged((user) => {
+
+  if (!user) return;
+
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+
+  if (user.displayName) {
+    nameInput.value = user.displayName;
+  }
+
+  if (user.email) {
+    emailInput.value = user.email;
+  }
+
+});
+
   messageEl.addEventListener('input', () => {
     charCount.textContent = messageEl.value.length;
   });
@@ -59,15 +89,30 @@ const bar = document.getElementById('scroll-bar');
     return valid;
   }
 
-  // Placeholder submit — swap the inside of this function for real Firebase calls.
-  function submitToBackend(data){
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulated success. Replace with an actual Firebase write + real error handling.
-        resolve(true);
-      }, 1100);
-    });
-  }
+  async function submitToBackend(data) {
+
+  // Save message to Firestore
+  await addDoc(collection(db, "contactMessages"), {
+    name: data.name,
+    email: data.email,
+    subject: data.subject,
+    message: data.message,
+    createdAt: serverTimestamp(),
+    userId: auth.currentUser?.uid || null
+  });
+
+  // Send email
+  await emailjs.send(
+    "service_6kabi9r",
+    "template_krfcymx",
+    {
+      name: data.name,
+      email: data.email,
+      subject: data.subject,
+      message: data.message
+    }
+  );
+}
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
