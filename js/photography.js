@@ -640,6 +640,14 @@ photoInput.addEventListener("change", () => {
 
 async function loadPhotos() {
 
+  // Show loading state immediately
+  resultCount.textContent = "Loading...";
+  grid.innerHTML = `
+    <div class="loading">
+      Loading photos...
+    </div>
+  `;
+
   const q = query(
     collection(db, "photos"),
     orderBy("createdAt", "desc")
