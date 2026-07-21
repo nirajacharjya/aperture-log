@@ -1,5 +1,7 @@
 rules_version = '2';
+
 service cloud.firestore {
+
   match /databases/{database}/documents {
 
     /* ---------------- Photos ---------------- */
@@ -65,6 +67,18 @@ service cloud.firestore {
 
       // Nobody can read or delete messages from the client
       allow read, update, delete: if false;
+    }
+
+    /* ---------------- Stories ---------------- */
+
+    match /stories/{storyId} {
+
+      allow read: if true;
+
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+
+      allow update, delete: if false;
     }
 
   }

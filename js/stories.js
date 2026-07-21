@@ -3,20 +3,16 @@
    Handles: theme toggle, story data + rendering, category
    filtering, pagination, the "read story" overlay, and the
    rich-text "Share your story" editor + submission form.
+
+   Backend: Firebase Firestore + Cloudinary (same pattern as
+   photography.js) — real uploads, published instantly, no
+   pending-review gate. Sharing a story requires being signed in.
    =========================================================== */
+import { db, auth } from "./firebase.js";
+import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./cloudinary.js";
+import { collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "firebase/firestore";
 
-/* ---------------- Theme toggle ---------------- */
-const root = document.documentElement;
-const themeBtn = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
-const SUN_PATH = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="1.5" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.5"/><line x1="3.5" y1="12" x2="1" y2="12"/><line x1="23" y1="12" x2="20.5" y2="12"/><line x1="5.1" y1="5.1" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.9" y2="18.9"/><line x1="5.1" y1="18.9" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.9" y2="5.1"/>';
-const MOON_PATH = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-
-function setTheme(light){
-  root.classList.toggle('light', light);
-  themeIcon.innerHTML = light ? SUN_PATH : MOON_PATH;
-}
-themeBtn.addEventListener('click', () => setTheme(!root.classList.contains('light')));
+/* Theme toggle now lives in the shared navbar.js component */
 
 const scrollBar = document.getElementById('scroll-bar');
 window.addEventListener('scroll', () => {
@@ -25,52 +21,49 @@ window.addEventListener('scroll', () => {
 });
 
 /* ---------------------------------------------------------
-   STORY DATA — swap for a Firestore query later. Each story
-   already carries an "author" field, so newly submitted
-   stories (once uploads/publishing are connected) can be
-   appended to this same array shape.
+   STORY DATA — live from Firestore. Populated by loadStories()
+   on init, and prepended-to locally the moment a new story is
+   published so it shows up instantly without waiting on a refetch.
    --------------------------------------------------------- */
 const CAT_LABELS = { personal:'Personal', learning:'Learning', travel:'Travel', career:'Career', other:'Other' };
-const AUTHORS = ['Niraj', 'Priya', 'Arjun', 'Suvam', 'Meher', 'Rhea', 'Dev', 'Ananya'];
 
-const STORY_SEEDS = [
-  { title: 'The Semester I Almost Quit Computer Science', cat: 'personal', excerpt: 'A rough second year, a professor who noticed, and the one conversation that changed how I saw the whole degree.' },
-  { title: 'What Three Months of Rejections Taught Me About Applying', cat: 'career', excerpt: 'Eleven "no"s before the first "yes" — and what I changed in my application after each one.' },
-  { title: 'Getting Lost in Cherrapunji Was the Best Part of the Trip', cat: 'travel', excerpt: 'The itinerary fell apart on day one. What happened instead is the part I actually remember.' },
-  { title: 'Teaching My Grandmother to Video Call', cat: 'personal', excerpt: 'Six attempts, a lot of patience on both sides, and a relationship that got closer because of a shared frustration.' },
-  { title: 'The Course I Almost Dropped Turned Out to Matter Most', cat: 'learning', excerpt: 'I signed up for the easy elective. I got the hardest, most useful class of my degree instead.' },
-  { title: 'My First Freelance Client Almost Didn\'t Pay Me', cat: 'career', excerpt: 'What I learned about contracts, boundaries, and asking for money upfront the hard way.' },
-  { title: 'A Power Cut, a Candle, and the Best Conversation With My Dad', cat: 'personal', excerpt: 'No phones, no distractions — just two hours we wouldn\'t have had otherwise.' },
-  { title: 'Learning to Read Research Papers Without Panicking', cat: 'learning', excerpt: 'The three-pass method that turned dense academic papers from a wall of text into something I could actually use.' },
-  { title: 'Missing My Train in Kolkata Taught Me to Slow Down', cat: 'travel', excerpt: 'An unplanned extra day in a city I thought I already understood.' },
-  { title: 'The Internship Interview Where I Froze Completely', cat: 'career', excerpt: 'What actually happened after the silence, and why it wasn\'t the disaster I thought it was.' },
-  { title: 'Why I Started Waking Up an Hour Earlier', cat: 'personal', excerpt: 'It wasn\'t about productivity — it was about getting one quiet hour that was actually mine.' },
-  { title: 'The Group Project That Fell Apart (and What I\'d Do Differently)', cat: 'learning', excerpt: 'Four people, one deadline, and the communication breakdown that taught me more than the assignment itself.' },
-  { title: 'A Week Without My Phone in the Hills', cat: 'travel', excerpt: 'What I noticed once there was nothing left to scroll through.' },
-  { title: 'Asking for Help Was Harder Than the Actual Problem', cat: 'other', excerpt: 'Stuck for six hours on a bug I could have solved in ten minutes, if I\'d just asked sooner.' }
-];
+let STORIES = [];
 
-const TOTAL_STORIES = 34;
-const STORIES = Array.from({ length: TOTAL_STORIES }, (_, i) => {
-  const seed = STORY_SEEDS[i % STORY_SEEDS.length];
-  const cat = seed.cat;
-  return {
-    id: i + 1,
-    seedImg: `aplog-story-${i + 1}`,
-    title: i < STORY_SEEDS.length ? seed.title : `${seed.title} — Part ${Math.floor(i / STORY_SEEDS.length) + 1}`,
-    cat,
-    excerpt: seed.excerpt,
-    author: AUTHORS[i % AUTHORS.length],
-    date: `2026-${String(((i % 12) + 1)).padStart(2,'0')}-${String(((i * 5) % 27) + 1).padStart(2,'0')}`,
-    readTime: 3 + (i % 6),
-    content: `
-      <p>${seed.excerpt}</p>
-      <p>It didn't feel like a big deal in the moment. Looking back, it's one of those small turning points that only makes sense once you've got some distance from it — the kind of thing you'd skip over in a summary but that actually changed how I approached everything that came after.</p>
-      <blockquote>The part that stuck with me wasn't the outcome. It was how differently I thought about the next decision because of it.</blockquote>
-      <p>If you're in the middle of something similar right now, I don't have a tidy lesson to hand you — just that it usually looks messier while it's happening than it does afterward. That part, at least, seems to be true every time.</p>
-    `
-  };
-});
+function excerptFromHTML(html, max = 160){
+  const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.length > max ? text.slice(0, max).trim() + '…' : text;
+}
+function readTimeFromHTML(html){
+  const words = html.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(2, Math.round(words / 200));
+}
+
+async function loadStories(){
+  try{
+    const q = query(collection(db, 'stories'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+    STORIES = snap.docs.map(docSnap => {
+      const d = docSnap.data();
+      const createdAt = d.createdAt?.toDate ? d.createdAt.toDate() : new Date();
+      return {
+        id: docSnap.id,
+        image: d.image,
+        title: d.title,
+        cat: d.category,
+        excerpt: excerptFromHTML(d.contentHTML || ''),
+        author: d.author,
+        userId: d.userId,
+        date: createdAt.toISOString().slice(0, 10),
+        readTime: readTimeFromHTML(d.contentHTML || ''),
+        content: d.contentHTML
+      };
+    });
+  } catch(err){
+    console.error('Failed to load stories:', err);
+    STORIES = [];
+  }
+  renderGrid();
+}
 
 /* ---------------- Grid rendering + filters + pagination ---------------- */
 const PER_PAGE = 9;
@@ -102,7 +95,7 @@ function renderGrid(){
     card.className = 'story-card';
     card.innerHTML = `
       <div class="sc-media">
-        <img src="https://picsum.photos/seed/${story.seedImg}/700/440" alt="Thumbnail for ${story.title}" loading="lazy">
+        <img src="${story.image}" alt="Thumbnail for ${story.title}" loading="lazy">
         <span class="sc-cat">${CAT_LABELS[story.cat]}</span>
       </div>
       <div class="sc-body">
@@ -178,7 +171,7 @@ const readContent = document.getElementById('read-content');
 function openReadOverlay(idx){
   const story = currentPageItems[idx];
   if(!story) return;
-  readImg.src = `https://picsum.photos/seed/${story.seedImg}/1200/650`;
+  readImg.src = story.image;
   readImg.alt = story.title;
   readCat.textContent = CAT_LABELS[story.cat];
   readTitle.textContent = story.title;
@@ -214,7 +207,13 @@ const storyForm = document.getElementById('story-form');
 const editorFormView = document.getElementById('editor-form-view');
 const editorSuccess = document.getElementById('editor-success');
 
-function openEditor(){ editorOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function openEditor(){
+  if(!auth.currentUser){
+    alert('Please sign in to share your story.');
+    return;
+  }
+  editorOverlay.classList.add('open'); document.body.style.overflow = 'hidden';
+}
 function closeEditor(){
   editorOverlay.classList.remove('open'); document.body.style.overflow = '';
   setTimeout(resetEditorForm, 250);
@@ -296,19 +295,85 @@ rtEditor.addEventListener('keyup', updateToolbarState);
 rtEditor.addEventListener('mouseup', updateToolbarState);
 
 /* ---------------------------------------------------------
-   SUBMIT — currently validates + previews only.
-   To connect Firebase later:
-     1. Add the Firebase SDK + config, plus Storage and Firestore.
-     2. In publishStory() below, upload the thumbnail File to
-        Cloud Storage, then addDoc() a new story document to
-        Firestore with title, author, category, the editor's
-        innerHTML (already-formatted content), and the thumbnail URL.
-     3. Once that resolves, either refetch STORIES from Firestore
-        or push the new entry into the array and call renderGrid()
-        so it appears immediately.
+   SUBMIT — real Firebase/Cloudinary integration, same pattern
+   as photography.js: compress the thumbnail in-browser before
+   upload (max 1920px, JPEG 82%, 25MB hard cap), push it to
+   Cloudinary, then addDoc() the story straight to Firestore.
+   No pending-review gate — a successful write is live immediately.
    --------------------------------------------------------- */
-function publishStory(data){
-  return new Promise(resolve => setTimeout(resolve, 900));
+const MAX_UPLOAD_BYTES = 25 * 1024 * 1024; // 25MB hard cap
+
+function compressImage(file, maxDim = 1920, quality = 0.82){
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = (e) => { img.src = e.target.result; };
+    reader.onerror = () => reject(new Error('Could not read the image file.'));
+    img.onload = () => {
+      let { width, height } = img;
+      if(width > maxDim || height > maxDim){
+        if(width > height){ height = Math.round(height * (maxDim / width)); width = maxDim; }
+        else { width = Math.round(width * (maxDim / height)); height = maxDim; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => blob ? resolve(blob) : reject(new Error('Image compression failed.')),
+        'image/jpeg',
+        quality
+      );
+    };
+    img.onerror = () => reject(new Error('Could not load the image file.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadToCloudinary(blob){
+  const form = new FormData();
+  form.append('file', blob);
+  form.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: form
+  });
+  const data = await res.json();
+  if(!res.ok || !data.secure_url){
+    throw new Error(data?.error?.message || 'Cloudinary upload failed.');
+  }
+  return data.secure_url;
+}
+
+async function publishStory({ title, author, category, thumbFile, contentHTML }){
+  if(!auth.currentUser) throw new Error('Please sign in to share your story.');
+  if(thumbFile.size > MAX_UPLOAD_BYTES) throw new Error('That image is too large — please use a file under 25MB.');
+
+  const compressed = await compressImage(thumbFile);
+  const imageUrl = await uploadToCloudinary(compressed);
+
+  await addDoc(collection(db, 'stories'), {
+    title,
+    author,
+    category,
+    contentHTML,
+    image: imageUrl,
+    userId: auth.currentUser.uid,
+    createdAt: serverTimestamp()
+  });
+
+  // Show it immediately without waiting on a refetch
+  STORIES.unshift({
+    id: `local-${Date.now()}`,
+    image: imageUrl,
+    title, cat: category, author,
+    userId: auth.currentUser.uid,
+    excerpt: excerptFromHTML(contentHTML),
+    date: new Date().toISOString().slice(0, 10),
+    readTime: readTimeFromHTML(contentHTML),
+    content: contentHTML
+  });
+  currentPage = 1;
+  renderGrid();
 }
 
 storyForm.addEventListener('submit', async (e) => {
@@ -329,10 +394,22 @@ storyForm.addEventListener('submit', async (e) => {
   }
   if(hasError) return;
 
-  await publishStory({ title, author, category, thumbFile, contentHTML });
-  editorFormView.style.display = 'none';
-  editorSuccess.classList.add('show');
+  const submitBtn = storyForm.querySelector('.editor-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Publishing…';
+
+  try{
+    await publishStory({ title, author, category, thumbFile, contentHTML });
+    editorFormView.style.display = 'none';
+    editorSuccess.classList.add('show');
+  } catch(err){
+    console.error(err);
+    alert(err.message || 'Something went wrong publishing your story. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Publish story';
+  }
 });
 
 /* ---------------- Init ---------------- */
-renderGrid();
+loadStories();
