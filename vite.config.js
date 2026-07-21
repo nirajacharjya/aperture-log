@@ -14,7 +14,9 @@ export default defineConfig({
         contact: resolve(__dirname, "contact.html"),
         privacypolicy: resolve(__dirname, "privacypolicy.html"),
         terms: resolve(__dirname, "terms&condition.html"),
-        stories: resolve(__dirname, "stories.html")
+        stories: resolve(__dirname, "stories.html"),
+        storyView: resolve(__dirname, 'storyview.html'),
+        storypost1: resolve(__dirname, "storypost1.html")
       }
     }
   }

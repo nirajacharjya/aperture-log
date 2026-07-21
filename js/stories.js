@@ -10,7 +10,7 @@
    =========================================================== */
 import { db, auth } from "./firebase.js";
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./cloudinary.js";
-import { collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, getDoc, runTransaction, increment } from "firebase/firestore";
 
 /* Theme toggle now lives in the shared navbar.js component */
 
@@ -27,7 +27,31 @@ window.addEventListener('scroll', () => {
    --------------------------------------------------------- */
 const CAT_LABELS = { personal:'Personal', learning:'Learning', travel:'Travel', career:'Career', other:'Other' };
 
-let STORIES = [];
+const HARDCODED_STORIES = [
+{
+  id:"storypost1",
+
+  hardcoded:true,
+
+  url:"storypost1.html",
+
+  image:"/images/image3.jpg",
+
+  title:"The ₹217 Dinner That Became a Saga",
+
+  cat:"personal",
+
+  excerpt:"A hungry university student searched through twenty restaurant menus before finally finding an affordable meal.",
+
+  author:"Niraj Acharjya",
+
+  date:"2026-07-21",
+
+  readTime:3
+}
+];
+
+let STORIES = [...HARDCODED_STORIES];
 
 function excerptFromHTML(html, max = 160){
   const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -60,8 +84,11 @@ async function loadStories(){
     });
   } catch(err){
     console.error('Failed to load stories:', err);
-    STORIES = [];
-  }
+}
+  STORIES = [
+  ...HARDCODED_STORIES,
+  ...STORIES
+];
   renderGrid();
 }
 
@@ -105,7 +132,16 @@ function renderGrid(){
         <span class="sc-read">Read story →</span>
       </div>
     `;
-    card.addEventListener('click', () => openReadOverlay(idx));
+  card.addEventListener('click', () => {
+
+    if(story.hardcoded){
+        window.location.href = story.url;
+        return;
+    }
+
+    window.location.href = `storyview.html?id=${story.id}`;
+
+});
     grid.appendChild(card);
   });
 
@@ -167,6 +203,11 @@ const readCat = document.getElementById('read-cat');
 const readTitle = document.getElementById('read-title');
 const readByline = document.getElementById('read-byline');
 const readContent = document.getElementById('read-content');
+const storyReactionsEl = document.getElementById('story-reactions');
+const storyCommentForm = document.getElementById('story-comment-form');
+const storyCommentInput = document.getElementById('story-comment-input');
+const storyCommentList = document.getElementById('story-comment-list');
+let currentReadStory = null;
 
 function openReadOverlay(idx){
   const story = currentPageItems[idx];
@@ -178,6 +219,11 @@ function openReadOverlay(idx){
   const dateStr = new Date(story.date).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
   readByline.textContent = `${story.author} · ${dateStr} · ${story.readTime} min read`;
   readContent.innerHTML = story.content;
+
+  currentReadStory = story;
+  storyCommentInput.value = '';
+  loadStoryReactions(story.id);
+  loadStoryComments(story.id);
   readOverlay.classList.add('open');
   readOverlay.scrollTop = 0;
   document.body.style.overflow = 'hidden';
@@ -351,7 +397,7 @@ async function publishStory({ title, author, category, thumbFile, contentHTML })
   const compressed = await compressImage(thumbFile);
   const imageUrl = await uploadToCloudinary(compressed);
 
-  await addDoc(collection(db, 'stories'), {
+  const docRef = await addDoc(collection(db, 'stories'), {
     title,
     author,
     category,
@@ -363,7 +409,7 @@ async function publishStory({ title, author, category, thumbFile, contentHTML })
 
   // Show it immediately without waiting on a refetch
   STORIES.unshift({
-    id: `local-${Date.now()}`,
+    id: docRef.id,
     image: imageUrl,
     title, cat: category, author,
     userId: auth.currentUser.uid,
@@ -412,4 +458,172 @@ storyForm.addEventListener('submit', async (e) => {
 });
 
 /* ---------------- Init ---------------- */
-loadStories();
+renderGrid();   // Show hardcoded stories immediately
+loadStories();  // Fetch Firebase stories in background
+
+/* ---------------------------------------------------------
+   REACTIONS + COMMENTS (shown after the story content)
+   ----------------------------------------------------------
+   Same data model as photography.js:
+     stories/{storyId}.reactions = { heart, haha, wow, clap, fire }
+     stories/{storyId}/reactedUsers/{uid} = { emoji }
+     stories/{storyId}/comments/{commentId} = { text, userId, userName, userPhoto, createdAt }
+   --------------------------------------------------------- */
+const STORY_REACTIONS = [
+  { key: 'heart', emoji: '❤️' },
+  { key: 'haha', emoji: '😂' },
+  { key: 'wow', emoji: '😮' },
+  { key: 'clap', emoji: '👏' },
+  { key: 'fire', emoji: '🔥' }
+];
+
+let currentStoryReactionCounts = {};
+let currentStoryUserReaction = null;
+
+function renderStoryReactions(){
+  const signedIn = !!auth.currentUser;
+  const buttons = STORY_REACTIONS.map(r => {
+    const count = Math.max(0, currentStoryReactionCounts[r.key] || 0);
+    const active = currentStoryUserReaction === r.key;
+    return `
+      <button type="button" class="reaction-btn${active ? ' active' : ''}" data-key="${r.key}">
+        <span class="r-emoji">${r.emoji}</span><span class="r-count">${count}</span>
+      </button>
+    `;
+  }).join('');
+
+  storyReactionsEl.innerHTML = signedIn
+    ? buttons
+    : buttons + `<span class="reaction-signin-hint">Sign in to react</span>`;
+}
+
+async function loadStoryReactions(storyId){
+  currentStoryReactionCounts = {};
+  currentStoryUserReaction = null;
+
+  try{
+    const storySnap = await getDoc(doc(db, 'stories', storyId));
+    if(storySnap.exists()) currentStoryReactionCounts = storySnap.data().reactions || {};
+
+    if(auth.currentUser){
+      const userSnap = await getDoc(doc(db, 'stories', storyId, 'reactedUsers', auth.currentUser.uid));
+      if(userSnap.exists()) currentStoryUserReaction = userSnap.data().emoji;
+    }
+  } catch(err){
+    console.error('Failed to load reactions:', err);
+  }
+
+  renderStoryReactions();
+}
+
+async function toggleStoryReaction(storyId, emojiKey){
+  const storyRef = doc(db, 'stories', storyId);
+  const userReactionRef = doc(db, 'stories', storyId, 'reactedUsers', auth.currentUser.uid);
+
+  try{
+    await runTransaction(db, async (tx) => {
+      const userSnap = await tx.get(userReactionRef);
+      const prevKey = userSnap.exists() ? userSnap.data().emoji : null;
+      const updates = {};
+
+      if(prevKey === emojiKey){
+        updates[`reactions.${emojiKey}`] = increment(-1);
+        tx.update(storyRef, updates);
+        tx.delete(userReactionRef);
+      } else {
+        if(prevKey) updates[`reactions.${prevKey}`] = increment(-1);
+        updates[`reactions.${emojiKey}`] = increment(1);
+        tx.update(storyRef, updates);
+        tx.set(userReactionRef, { emoji: emojiKey });
+      }
+    });
+
+    await loadStoryReactions(storyId);
+  } catch(err){
+    console.error('Failed to update reaction:', err);
+    alert("Couldn't save your reaction. Please try again.");
+  }
+}
+
+storyReactionsEl.addEventListener('click', async (e) => {
+  const btn = e.target.closest('.reaction-btn');
+  if(!btn || !currentReadStory) return;
+
+  if(!auth.currentUser){
+    alert('Please sign in to react to a story.');
+    return;
+  }
+  await toggleStoryReaction(currentReadStory.id, btn.dataset.key);
+});
+
+function escapeHTML(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+async function loadStoryComments(storyId){
+  storyCommentList.innerHTML = `<p class="comment-empty">Loading comments...</p>`;
+
+  try{
+    const q = query(collection(db, 'stories', storyId, 'comments'), orderBy('createdAt', 'desc'));
+    const snap = await getDocs(q);
+
+    if(snap.empty){
+      storyCommentList.innerHTML = `<p class="comment-empty">No comments yet — be the first to say something.</p>`;
+      return;
+    }
+
+    storyCommentList.innerHTML = snap.docs.map(docSnap => {
+      const c = docSnap.data();
+      const name = c.userName || 'Anonymous';
+      const initials = name.charAt(0).toUpperCase();
+      const avatarInner = c.userPhoto ? `<img src="${c.userPhoto}" alt="${name}">` : initials;
+      const timeStr = c.createdAt
+        ? c.createdAt.toDate().toLocaleDateString('en-US', { month:'short', day:'numeric' })
+        : 'just now';
+
+      return `
+        <div class="comment-item">
+          <div class="comment-avatar">${avatarInner}</div>
+          <div class="comment-body">
+            <span class="comment-name">${escapeHTML(name)}</span><span class="comment-time">${timeStr}</span>
+            <p class="comment-text">${escapeHTML(c.text)}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(err){
+    console.error('Failed to load comments:', err);
+    storyCommentList.innerHTML = `<p class="comment-empty">Couldn't load comments right now.</p>`;
+  }
+}
+
+storyCommentForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if(!currentReadStory) return;
+
+  const text = storyCommentInput.value.trim();
+  if(!text) return;
+
+  if(!auth.currentUser){
+    alert('Please sign in to comment.');
+    return;
+  }
+
+  try{
+    await addDoc(collection(db, 'stories', currentReadStory.id, 'comments'), {
+      text,
+      userId: auth.currentUser.uid,
+      userName: auth.currentUser.displayName || 'Anonymous',
+      userPhoto: auth.currentUser.photoURL || '',
+      createdAt: serverTimestamp()
+    });
+
+    storyCommentInput.value = '';
+    await loadStoryComments(currentReadStory.id);
+  } catch(err){
+    console.error('Failed to post comment:', err);
+    alert('Could not post your comment. Please try again.');
+  }
+});
