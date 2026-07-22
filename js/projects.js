@@ -1,106 +1,102 @@
 const bar = document.getElementById("scroll-bar");
 
 window.addEventListener("scroll", () => {
-
     const h = document.documentElement;
-
     bar.style.width =
-        (h.scrollTop/(h.scrollHeight-h.clientHeight))*100+"%";
-
+        (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + "%";
 });
 
-const PROJECTS=[
-
+const PROJECTS = [
 {
+    title: "Aperture Log",
 
-title:"Aperture Log",
+    status: "Live",
 
-status:"Featured Project",
+    description:
+        "A full-stack photography and blogging platform where users can share photographs, publish stories, manage their profiles, and explore creative work. Built with JavaScript, Firebase, and Vite.",
 
-image:"images/image2.png",
+    tags: [
+        "JavaScript",
+        "Firebase",
+        "Vite"
+    ],
 
-description:
-"A modern photography and blogging platform where users can upload photos, publish articles, share stories, comment, react and explore beautiful photography. Built completely from scratch.",
+    github: "https://github.com/nirajacharjya/aperture-log",
 
-tags:[
-"HTML",
-"CSS",
-"JavaScript",
-"Firebase",
-"Firestore",
-"Cloudinary",
-"Google Analytics"
-],
-
-github:"https://github.com/nirajacharjya/aperture-log",
-
-live:"https://aperture-log-65415.web.app"
-
+    live: "https://aperture-log-65415.web.app/"
 }
-
 ];
 
-const container=document.getElementById("project-list");
+const container = document.getElementById("project-list");
 
-document.getElementById("result-count").textContent=PROJECTS.length;
+document.getElementById("result-count").textContent = PROJECTS.length;
 
-PROJECTS.forEach(project=>{
+PROJECTS.forEach((project, index) => {
 
-const card=document.createElement("div");
+    const row = document.createElement("div");
 
-card.className="project-card";
+    row.className = "proj-row";
 
-card.innerHTML=`
+    row.innerHTML = `
 
-<img class="project-image"
-src="${project.image}">
+<div class="proj-index">
+${String(index + 1).padStart(2, "0")}
+</div>
 
-<div class="project-content">
+<div class="proj-main">
 
-<span class="status-pill status-live">
-${project.status}
-</span>
+    <div class="proj-top-row">
 
-<h2 class="project-title">
-${project.title}
-</h2>
+        <h3 class="proj-title">
+            ${project.title}
+        </h3>
 
-<p class="project-desc">
-${project.description}
-</p>
+        <span class="status-pill status-live">
+            ${project.status}
+        </span>
 
-<div class="tag-row">
+    </div>
 
-${project.tags.map(tag=>`
-<span class="tag">${tag}</span>
-`).join("")}
+    <p class="proj-desc">
+        ${project.description}
+    </p>
+
+    <div class="tag-row">
+
+        ${project.tags.map(tag => `
+            <span class="tag">${tag}</span>
+        `).join("")}
+
+    </div>
 
 </div>
 
-<div class="project-links">
+<div class="proj-links">
 
-<a class="project-btn"
-href="${project.github}"
-target="_blank">
+    <a
+        class="proj-link-btn"
+        href="${project.github}"
+        target="_blank"
+        rel="noopener noreferrer">
 
-GitHub →
+        GitHub →
 
-</a>
+    </a>
 
-<a class="project-btn primary-btn"
-href="${project.live}"
-target="_blank">
+    <a
+        class="proj-link-btn"
+        href="${project.live}"
+        target="_blank"
+        rel="noopener noreferrer">
 
-Live Website →
+        Live Demo →
 
-</a>
-
-</div>
+    </a>
 
 </div>
 
 `;
 
-container.appendChild(card);
+    container.appendChild(row);
 
 });
