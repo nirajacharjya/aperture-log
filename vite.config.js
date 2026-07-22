@@ -9,6 +9,7 @@ export default defineConfig({
         about: resolve(__dirname, "about.html"),
         articles: resolve(__dirname, "articles.html"),
         article: resolve(__dirname, "Blogpost01.html"),
+        Blogpost02: resolve(__dirname, "Blogpost02.html"),
         photography: resolve(__dirname, "photography.html"),
         projects: resolve(__dirname, "projects.html"),
         contact: resolve(__dirname, "contact.html"),
@@ -16,7 +17,9 @@ export default defineConfig({
         terms: resolve(__dirname, "terms&condition.html"),
         stories: resolve(__dirname, "stories.html"),
         storyView: resolve(__dirname, 'storyview.html'),
-        storypost1: resolve(__dirname, "storypost1.html")
+        storypost1: resolve(__dirname, "storypost1.html"),
+         profile: resolve(__dirname, "profile.html")
+
       }
     }
   }

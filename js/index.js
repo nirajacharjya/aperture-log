@@ -47,7 +47,7 @@ async function loadHomeGallery() {
     const q = query(
         collection(db, "photos"),
         orderBy("createdAt", "desc"),
-        limit(6)
+        limit(8)
     );
 
     const snapshot = await getDocs(q);

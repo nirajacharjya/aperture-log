@@ -14,9 +14,18 @@ service cloud.firestore {
                     && request.resource.data.userId == request.auth.uid;
 
       allow update: if request.auth != null
-                    && request.resource.data.diff(resource.data)
-                       .affectedKeys()
-                       .hasOnly(['reactions']);
+                    && (
+                      // Anyone signed in can react (heart/haha/wow/clap/fire counts)
+                      request.resource.data.diff(resource.data)
+                        .affectedKeys()
+                        .hasOnly(['reactions'])
+                      ||
+                      // Only the owner can edit their own photo's text fields
+                      (request.auth.uid == resource.data.userId
+                       && request.resource.data.diff(resource.data)
+                          .affectedKeys()
+                          .hasOnly(['title', 'category', 'location', 'story']))
+                    );
 
       allow delete: if request.auth != null
                     && request.auth.uid == resource.data.userId;
@@ -79,11 +88,21 @@ service cloud.firestore {
                     && request.resource.data.userId == request.auth.uid;
 
       allow update: if request.auth != null
-                    && request.resource.data.diff(resource.data)
-                       .affectedKeys()
-                       .hasOnly(['reactions']);
+                    && (
+                      // Anyone signed in can react (heart/haha/wow/clap/fire counts)
+                      request.resource.data.diff(resource.data)
+                        .affectedKeys()
+                        .hasOnly(['reactions'])
+                      ||
+                      // Only the owner can edit their own story's text fields
+                      (request.auth.uid == resource.data.userId
+                       && request.resource.data.diff(resource.data)
+                          .affectedKeys()
+                          .hasOnly(['title', 'category', 'contentHTML']))
+                    );
 
-      allow delete: if false;
+      allow delete: if request.auth != null
+                    && request.auth.uid == resource.data.userId;
 
       match /reactedUsers/{uid} {
         allow read, write: if request.auth != null
