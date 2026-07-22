@@ -27,6 +27,18 @@ window.addEventListener('scroll', () => {
    --------------------------------------------------------- */
 const CAT_LABELS = { personal:'Personal', learning:'Learning', travel:'Travel', career:'Career', other:'Other' };
 
+/**
+ * Same fix as photography.js — inserts a Cloudinary transformation
+ * into the delivery URL so the browser downloads an image sized for
+ * where it's actually shown, instead of the full 1920px upload.
+ * Non-Cloudinary URLs (like the hardcoded story's local /images/ file)
+ * pass through untouched.
+ */
+function cldTransform(url, transform) {
+  if (!url || !url.includes('/upload/')) return url;
+  return url.replace('/upload/', `/upload/${transform}/`);
+}
+
 const HARDCODED_STORIES = [
 {
   id:"storypost1",
@@ -120,9 +132,11 @@ function renderGrid(){
   currentPageItems.forEach((story, idx) => {
     const card = document.createElement('div');
     card.className = 'story-card';
+    const isAboveFold = idx < 6;
+    const thumbUrl = cldTransform(story.image, 'w_500,q_auto,f_auto,c_limit');
     card.innerHTML = `
       <div class="sc-media">
-        <img src="${story.image}" alt="Thumbnail for ${story.title}" loading="lazy">
+        <img src="${thumbUrl}" alt="Thumbnail for ${story.title}" ${isAboveFold ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}>
         <span class="sc-cat">${CAT_LABELS[story.cat]}</span>
       </div>
       <div class="sc-body">
@@ -139,7 +153,7 @@ function renderGrid(){
         return;
     }
 
-    window.location.href = `storyview.html?id=${story.id}`;
+    window.location.href = `story-view.html?id=${story.id}`;
 
 });
     grid.appendChild(card);
@@ -212,7 +226,7 @@ let currentReadStory = null;
 function openReadOverlay(idx){
   const story = currentPageItems[idx];
   if(!story) return;
-  readImg.src = story.image;
+  readImg.src = cldTransform(story.image, 'w_900,q_auto,f_auto,c_limit');
   readImg.alt = story.title;
   readCat.textContent = CAT_LABELS[story.cat];
   readTitle.textContent = story.title;

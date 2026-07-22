@@ -21,6 +21,12 @@ window.addEventListener('scroll', () => {
 
 const CAT_LABELS = { personal:'Personal', learning:'Learning', travel:'Travel', career:'Career', other:'Other' };
 
+/** Same Cloudinary size/format fix used in stories.js and photography.js. */
+function cldTransform(url, transform) {
+  if (!url || !url.includes('/upload/')) return url;
+  return url.replace('/upload/', `/upload/${transform}/`);
+}
+
 const STORY_ID = new URLSearchParams(window.location.search).get('id');
 
 const articleEl = document.getElementById('story-article');
@@ -77,11 +83,11 @@ async function loadStory(){
     setMeta('meta-description', excerpt);
     setMeta('og-title', d.title);
     setMeta('og-description', excerpt);
-    setMeta('og-image', d.image);
+    setMeta('og-image', cldTransform(d.image, 'w_1200,q_auto,f_auto,c_limit'));
     setMeta('og-url', pageUrl);
     setMeta('twitter-title', d.title);
     setMeta('twitter-description', excerpt);
-    setMeta('twitter-image', d.image);
+    setMeta('twitter-image', cldTransform(d.image, 'w_1200,q_auto,f_auto,c_limit'));
     document.getElementById('canonical-link').setAttribute('href', pageUrl);
 
     bcTitle.textContent = d.title;
@@ -89,7 +95,7 @@ async function loadStory(){
     titleEl.textContent = d.title;
     bylineNameEl.textContent = d.author || 'Anonymous';
     bylineMetaEl.textContent = `${dateStr} · ${readTime} min read`;
-    imgEl.src = d.image;
+    imgEl.src = cldTransform(d.image, 'w_1400,q_auto,f_auto,c_limit');
     imgEl.alt = d.title;
     contentEl.innerHTML = d.contentHTML || '';
     bioNameEl.textContent = `Written by ${d.author || 'Anonymous'}`;
