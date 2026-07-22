@@ -61,6 +61,26 @@ const noResults = document.getElementById('no-results');
 const paginationEl = document.getElementById('pagination');
 const filterPills = document.querySelectorAll('.filter-pill');
 
+/**
+ * Inserts a Cloudinary transformation string into a delivery URL
+ * so the browser downloads an appropriately-sized image instead
+ * of the full original file.
+ *
+ * This is the actual fix for the "photos take 5 seconds to load"
+ * problem: uploaded photos are compressed to up to 1920px before
+ * upload, but the grid tiles only display at ~300-400px. Without
+ * a transform, every tile was downloading the FULL 1920px image
+ * just to shrink it down with CSS — massively oversized payloads.
+ *
+ * f_auto  → serves WebP/AVIF automatically when the browser supports it
+ * q_auto  → Cloudinary picks the smallest quality that still looks good
+ * c_limit → resizes down to fit within the given width, never upscales
+ */
+function cldTransform(url, transform) {
+  if (!url || !url.includes('/upload/')) return url;
+  return url.replace('/upload/', `/upload/${transform}/`);
+}
+
 function getFiltered() {
   return activeCat === 'all' ? PHOTOS : PHOTOS.filter(p => p.cat === activeCat);
 }
@@ -79,8 +99,19 @@ function renderGrid() {
     const tile = document.createElement('div');
     tile.className = 'photo-tile';
     tile.dataset.idx = idx;
+
+    // The first handful of tiles are visible without scrolling —
+    // load those immediately at higher priority. Everything below
+    // the fold stays lazy so it doesn't compete for bandwidth.
+    const isAboveFold = idx < 8;
+    const thumbUrl = cldTransform(photo.image, 'w_600,q_auto,f_auto,c_limit');
+
     tile.innerHTML = `
-    <img src="${photo.image}" alt="${photo.title}" loading="lazy">
+    <img
+      src="${thumbUrl}"
+      alt="${photo.title}"
+      ${isAboveFold ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}
+    >
 
     <div class="tile-overlay">
         <span class="t-cat">${CAT_LABELS[photo.cat] ?? photo.cat}</span>
@@ -151,30 +182,59 @@ const lbDate = document.getElementById('lb-date');
 const lbCamera = document.getElementById('lb-camera');
 const lbLens = document.getElementById('lb-lens');
 const lbSettings = document.getElementById('lb-settings');
+const lbAuthor = document.getElementById('lb-author');
 let lightboxIdx = 0;
+let lightboxHistoryPushed = false;
 
 function openLightbox(idx) {
   lightboxIdx = idx;
   showPhoto();
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Push a dummy history entry so the phone/browser back button
+  // closes the lightbox instead of navigating away from the page.
+  if (!lightboxHistoryPushed) {
+    history.pushState({ lightboxOpen: true }, '');
+    lightboxHistoryPushed = true;
+  }
 }
-function closeLightbox() {
+function closeLightbox(fromPopstate = false) {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
+
+  if (lightboxHistoryPushed) {
+    lightboxHistoryPushed = false;
+    // If we're closing via the X/outside-click/Escape (not because the
+    // user already pressed back), consume the pushed history entry so
+    // it doesn't leave a stale extra "back" step sitting in history.
+    if (!fromPopstate) history.back();
+  }
 }
+
+// Phone/browser back button while the lightbox is open → close it,
+// stay on the page, instead of navigating to whatever came before.
+window.addEventListener('popstate', () => {
+  if (lightbox.classList.contains('open')) {
+    closeLightbox(true);
+  }
+});
 function showPhoto() {
   const photo = currentPageItems[lightboxIdx];
 
   if (!photo) return;
 
-  lbImg.src = photo.image;
+  // The lightbox is much bigger than a grid tile, so it gets a
+  // larger transform — still far smaller than the raw upload,
+  // and still auto-optimized for format/quality.
+  lbImg.src = cldTransform(photo.image, 'w_1600,q_auto,f_auto,c_limit');
   lbImg.alt = photo.title;
 
   lbCat.textContent = CAT_LABELS[photo.cat] ?? photo.cat;
   lbTitle.textContent = photo.title;
-  lbStory.textContent = photo.story;
+  lbStory.textContent = photo.story || "No story shared for this one.";
   lbLocation.textContent = photo.location;
+  lbAuthor.textContent = photo.userName || "Anonymous";
 
   lbDate.textContent = new Date(photo.date).toLocaleDateString(
     "en-US",
@@ -195,7 +255,7 @@ function showPhoto() {
   loadComments(photo.id);
 }
 
-document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-close').addEventListener('click', () => closeLightbox());
 document.getElementById('lb-prev').addEventListener('click', () => { lightboxIdx = (lightboxIdx - 1 + currentPageItems.length) % currentPageItems.length; showPhoto(); });
 document.getElementById('lb-next').addEventListener('click', () => { lightboxIdx = (lightboxIdx + 1) % currentPageItems.length; showPhoto(); });
 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
@@ -234,6 +294,7 @@ const changePhotoBtn = document.getElementById("changePhotoBtn");
 
 // Inputs
 const photoTitle = document.getElementById("photoTitle");
+const photoCredit = document.getElementById("photoCredit");
 const photoCategory = document.getElementById("photoCategory");
 const photoLocation = document.getElementById("photoLocation");
 const photoStory = document.getElementById("photoStory");
@@ -401,16 +462,7 @@ uploadForm.addEventListener("submit", (e) => {
 
   }
 
-  if (photoStory.value.trim() === "") {
-
-    storyError.textContent = "Please tell the story behind the shot.";
-    storyError.classList.add("show");
-
-    photoStory.classList.add("input-error");
-
-    valid = false;
-
-  }
+  // Story Behind The Shot is now optional — no validation here.
 
   if (!valid) return;
 
@@ -526,6 +578,11 @@ async function startFakeUpload() {
 
     console.log("Image URL:", data.secure_url);
 
+    // Credit box left blank → falls back to the signed-in account's
+    // display name, same as before this change → "Anonymous" as a
+    // last resort if neither is available.
+    const creditName = photoCredit.value.trim() || auth.currentUser.displayName || "Anonymous";
+
     await addDoc(collection(db, "photos"), {
 
       title: photoTitle.value,
@@ -540,7 +597,7 @@ async function startFakeUpload() {
 
       userId: auth.currentUser.uid,
 
-      userName: auth.currentUser.displayName,
+      userName: creditName,
 
       userPhoto: auth.currentUser.photoURL,
 
@@ -947,4 +1004,3 @@ commentForm.addEventListener("submit", async (e) => {
   }
 
 });
-  
