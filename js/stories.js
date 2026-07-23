@@ -153,7 +153,7 @@ function renderGrid(){
         return;
     }
 
-    window.location.href = `story-view.html?id=${story.id}`;
+    window.location.href = `storyview.html?id=${story.id}`;
 
 });
     grid.appendChild(card);
