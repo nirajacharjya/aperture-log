@@ -1,25 +1,7 @@
 import { initializeAuth } from "./auth.js";
-async function loadNavbar() {
-    try {
-        const response = await fetch("/components/navbar.html");
-
-        if (!response.ok) {
-            throw new Error("Navbar not found.");
-        }
-
-        const html = await response.text();
-
-        document.getElementById("navbar").innerHTML = html;
-
-        initializeNavbar();
-
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadNavbar();
+    initializeNavbar();
 });
 
 function initializeNavbar() {
@@ -31,42 +13,31 @@ function initializeNavbar() {
     if (menuToggle && mobileMenu) {
 
         menuToggle.addEventListener("click", (e) => {
-
             e.stopPropagation();
-
             mobileMenu.classList.toggle("show");
-
         });
 
         mobileMenu.addEventListener("click", (e) => {
-
             e.stopPropagation();
-
         });
 
         document.addEventListener("click", () => {
-
             mobileMenu.classList.remove("show");
-
         });
+
         mobileMenu.querySelectorAll("a").forEach(link => {
-
             link.addEventListener("click", () => {
-
                 mobileMenu.classList.remove("show");
-
             });
-
         });
 
     }
 
-
-    // Theme Toggle
     initializeTheme();
     initializeAuth();
 
 }
+
 function initializeTheme() {
 
     const root = document.documentElement;
@@ -92,5 +63,3 @@ function initializeTheme() {
     };
 
 }
-
-

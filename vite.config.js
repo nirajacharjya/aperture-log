@@ -1,7 +1,21 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
+import { readFileSync } from "fs";
+
+const navbarHTML = readFileSync(
+  resolve(__dirname, "public/components/navbar.html"),
+  "utf-8"
+);
 
 export default defineConfig({
+  plugins: [
+    {
+      name: "inject-navbar",
+      transformIndexHtml(html) {
+        return html.replace('<div id="navbar"></div>', navbarHTML);
+      }
+    }
+  ],
   build: {
     rollupOptions: {
       input: {
@@ -18,8 +32,7 @@ export default defineConfig({
         stories: resolve(__dirname, "stories.html"),
         storyView: resolve(__dirname, 'storyview.html'),
         storypost1: resolve(__dirname, "storypost1.html"),
-         profile: resolve(__dirname, "profile.html")
-
+        profile: resolve(__dirname, "profile.html")
       }
     }
   }

@@ -274,8 +274,9 @@
 
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
   </style>
-  <script type="module" crossorigin src="/assets/article-BAsvEfNH.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/navbar-DhsFrSM_.js">
+  <script type="module" crossorigin src="/assets/article-BSPZB883.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/navbar-DKAsSNUJ.js">
+  <link rel="modulepreload" crossorigin href="/assets/firestore-Dnk4qTg2.js">
   <link rel="stylesheet" crossorigin href="/assets/navbar-rGqnzXS_.css">
 </head>
 
@@ -283,7 +284,90 @@
 
   <div id="scroll-bar"></div>
 
-  <div id="navbar"></div>
+  <header>
+    <nav>
+        <a href="index.html" class="brand">
+            <span class="dot"></span>
+            Aperture Log
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="articles.html">Blog</a></li>
+            <li><a href="stories.html">Stories</a></li>
+            <li><a href="photography.html">Photography</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+
+        <div class="nav-right">
+
+            <div class="auth-area">
+
+                <button class="login-btn" id="loginBtn">
+                    👤 Sign In
+                </button>
+
+                <div class="profile-menu" id="profileMenu">
+                    <img id="profileImage" src="" alt="Profile">
+                    <span id="profileName">User</span>
+                </div>
+
+                <!-- Profile Dropdown -->
+                <div class="profile-dropdown" id="profileDropdown">
+
+                    <div class="dropdown-user">
+                        <img id="dropdownProfileImage" src="" alt="Profile">
+
+                        <div>
+                            <strong id="dropdownName">User</strong><br>
+                            <small id="dropdownEmail">email@gmail.com</small>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <a href="profile.html" id="profileLink"
+                        style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 8px;color:inherit;text-decoration:none;font:inherit;text-align:left;box-sizing:border-box;">
+                        🖼️ My Profile
+                    </a>
+
+                    <button id="logoutBtn">
+                        🚪 Sign Out
+                    </button>
+
+                </div>
+
+            </div>
+            <div class="theme-btn" id="theme-toggle" title="Toggle theme">
+                <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </div>
+
+            <div class="search-btn mobile-toggle" id="menu-toggle" title="Menu">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                </svg>
+            </div>
+
+        </div>
+
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="articles.html">Blog</a>
+        <a href="stories.html">Stories</a>
+        <a href="photography.html">Photography</a>
+        <a href="projects.html">Projects</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</header>
 
   <div class="wrap">
     <div class="breadcrumb">

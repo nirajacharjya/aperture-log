@@ -8,7 +8,8 @@
    photography.js) — real uploads, published instantly, no
    pending-review gate. Sharing a story requires being signed in.
    =========================================================== */
-import { db, auth } from "./firebase.js";
+import { auth } from "./firebase.js";
+import { db } from "./firestore.js";
 import { CLOUDINARY_CLOUD_NAME, CLOUDINARY_UPLOAD_PRESET } from "./cloudinary.js";
 import { collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, getDoc, runTransaction, increment } from "firebase/firestore";
 

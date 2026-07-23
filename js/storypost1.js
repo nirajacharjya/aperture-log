@@ -1,4 +1,5 @@
-import { db, auth } from "./firebase.js";
+import { auth } from "./firebase.js";
+import { db } from "./firestore.js";
   import {
     collection, addDoc, getDocs, query, orderBy, serverTimestamp,
     doc, getDoc, runTransaction, increment

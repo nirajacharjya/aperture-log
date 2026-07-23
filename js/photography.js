@@ -3,7 +3,8 @@ import {
   CLOUDINARY_UPLOAD_PRESET
 } from "./cloudinary.js";
 
-import { db, auth } from "./firebase.js";
+import { auth } from "./firebase.js";
+import { db } from "./firestore.js";
 
 import {
   collection,
