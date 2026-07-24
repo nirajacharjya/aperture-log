@@ -64,11 +64,447 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+  <!-- These domains aren't known until the Firestore query resolves and
+       photography.js requests the images, so preconnecting here lets the
+       DNS/TLS handshake happen in parallel with everything else instead
+       of adding more delay once the fetch actually starts. -->
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 
-  <link rel="stylesheet" href="/css/navbar.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional"
+    rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional"
+      rel="stylesheet">
+  </noscript>
+
+  <style>
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      background: color-mix(in srgb, var(--bg-canvas) 78%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 18px 32px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: .01em;
+      flex-shrink: 1;
+    }
+
+    .brand .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 0 4px var(--accent-amber-dim);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-secondary);
+
+      /* margin-left: auto; */
+    }
+
+    .nav-links a {
+      transition: color .2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active {
+
+      color: var(--text-primary);
+
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 32px;
+      flex-shrink: 0;
+    }
+
+    .search-btn,
+    .theme-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all .2s ease;
+    }
+
+    .search-btn:hover,
+    .theme-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .mobile-toggle {
+      display: none;
+    }
+
+    @media (max-width:860px) {
+
+      nav {
+        padding: 16px 20px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .nav-right {
+        gap: 8px;
+        margin-left: 12px;
+      }
+
+    }
+
+    .auth-area {
+      display: flex;
+      align-items: center;
+
+      position: relative;
+    }
+
+    .mobile-menu {
+
+      display: none;
+
+      flex-direction: column;
+
+      background: var(--bg-surface);
+
+      border-top: 1px solid var(--border);
+
+    }
+
+    .mobile-menu a {
+
+      padding: 16px 32px;
+
+      border-bottom: 1px solid var(--border);
+
+      color: var(--text-primary);
+
+      transition: .2s;
+
+    }
+
+    .mobile-menu a:hover {
+
+      background: var(--bg-surface-2);
+
+    }
+
+    .mobile-menu.show {
+
+      display: flex;
+
+    }
+
+    @media(min-width:861px) {
+
+      .mobile-menu {
+
+        display: none !important;
+
+      }
+
+    }
+
+    .login-btn {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      min-width: 140px;
+
+      height: 52px;
+
+      padding: 0 22px;
+
+      border-radius: 14px;
+
+      background: var(--bg-surface);
+
+      border: 1px solid var(--border);
+
+      color: var(--text-primary);
+
+      font-size: 17px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition:
+        background .25s,
+        border-color .25s,
+        transform .25s,
+        color .25s;
+
+    }
+
+    @media (max-width:768px) {
+      .login-btn {
+        min-width: 100px;
+        height: 40px;
+        padding: 0 12px;
+        gap: 6px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+    }
+
+    .login-btn:hover {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .profile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 170px;
+      height: 52px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .profile-menu:hover {
+      border-color: var(--accent-teal);
+    }
+
+    .profile-menu img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-menu span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Mobile Profile Button */
+    @media (max-width:768px) {
+
+      .profile-menu {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+
+        padding: 0;
+
+        justify-content: center;
+      }
+
+      .profile-menu img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .profile-menu span {
+        display: none;
+      }
+
+    }
+
+    /* ================= PROFILE DROPDOWN ================= */
+
+    .profile-dropdown {
+
+      position: absolute;
+
+      top: 60px;
+      right: -8px;
+
+      width: 240px;
+      max-width: calc(100vw - 24px);
+
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
+
+      padding: 14px;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+
+      transition:
+        opacity .25s ease,
+        transform .25s ease,
+        visibility .25s;
+
+      z-index: 999;
+
+    }
+
+    .profile-dropdown.show{
+
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+
+    }
+
+    .dropdown-user {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      margin-bottom: 12px;
+
+    }
+
+    .dropdown-user img {
+
+      width: 40px;
+      height: 40px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+    }
+
+    .dropdown-user strong {
+
+      display: block;
+      font-size: 15px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+    }
+
+    .dropdown-user small {
+
+      display: block;
+
+      color: var(--text-secondary);
+      font-size: 12px;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+    }
+
+    .profile-dropdown hr {
+
+      border: none;
+
+      border-top: 1px solid var(--border);
+
+      margin: 12px 0;
+
+    }
+
+    .profile-dropdown button {
+
+      width: 100%;
+
+      padding: 12px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: transparent;
+
+      color: var(--text-primary);
+
+      cursor: pointer;
+
+      font-size: 15px;
+
+      transition: .2s;
+
+    }
+
+    .profile-dropdown button:hover {
+
+      background: var(--bg-surface-2);
+
+    }
+    #logoutBtn{
+
+      color:#ff6b6b;
+
+    }
+
+    #logoutBtn:hover{
+
+      background:rgba(255,107,107,.12);
+
+    }
+  </style>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MM04PXD1BN"></script>

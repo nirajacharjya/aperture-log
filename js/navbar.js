@@ -1,5 +1,3 @@
-import { initializeAuth } from "./auth.js";
-
 document.addEventListener("DOMContentLoaded", () => {
     initializeNavbar();
 });
@@ -34,7 +32,15 @@ function initializeNavbar() {
     }
 
     initializeTheme();
-    initializeAuth();
+
+    // Dynamically import the auth module instead of a static top-level import.
+    // Same behavior (still runs immediately on every page load so the
+    // sign-in / profile UI is correct right away) but Vite now splits the
+    // Firebase Auth SDK into its own chunk, fetched in parallel instead of
+    // being bundled into navbar.js's main parse/execute path.
+    import("./auth.js").then(({ initializeAuth }) => {
+        initializeAuth();
+    });
 
 }
 

@@ -242,19 +242,22 @@ gtag('config', 'G-MM04PXD1BN');
       transition: all .15s ease;
     }
     .kebab-btn:hover { color: var(--text-primary); border-color: var(--accent-teal); }
-    .card-menu-dropdown {
-      position: absolute; top: calc(100% + 6px); right: 0;
-      min-width: 130px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-strong);
-      border-radius: 10px;
-      padding: 6px;
-      display: none;
-      flex-direction: column;
-      gap: 2px;
-      box-shadow: var(--shadow-lift);
-      z-index: 20;
-    }
+   .card-menu-dropdown {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    right: 0;
+
+    min-width: 130px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: var(--shadow-lift);
+    z-index: 1000;
+}
     .card-menu-dropdown.show { display: flex; }
     .card-menu-dropdown button {
       text-align: left;
@@ -419,9 +422,10 @@ gtag('config', 'G-MM04PXD1BN');
       * { transition: none !important; }
     }
   </style>
-  <script type="module" crossorigin src="/assets/profile-ChL0EMAR.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/navbar-DKAsSNUJ.js">
-  <link rel="modulepreload" crossorigin href="/assets/firestore-Dnk4qTg2.js">
+  <script type="module" crossorigin src="/assets/profile-BGp7mU7q.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/navbar-BE0pcXJT.js">
+  <link rel="modulepreload" crossorigin href="/assets/firebase-ktiKoggj.js">
+  <link rel="modulepreload" crossorigin href="/assets/firestore-BjPrYuqs.js">
   <link rel="stylesheet" crossorigin href="/assets/navbar-rGqnzXS_.css">
 </head>
 

@@ -107,10 +107,19 @@ function renderGrid() {
     const isAboveFold = idx < 8;
     const thumbUrl = cldTransform(photo.image, 'w_600,q_auto,f_auto,c_limit');
 
+    // Real dimensions captured at upload time (see compressImage /
+    // startFakeUpload below). Older photos uploaded before this change
+    // won't have width/height saved — the attribute is just omitted
+    // for those, same as before, no breakage either way.
+    const dimAttrs = (photo.width && photo.height)
+      ? `width="${photo.width}" height="${photo.height}"`
+      : '';
+
     tile.innerHTML = `
     <img
       src="${thumbUrl}"
       alt="${photo.title}"
+      ${dimAttrs}
       ${isAboveFold ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}
     >
 
@@ -476,6 +485,12 @@ uploadForm.addEventListener("submit", (e) => {
  * 5-20MB, which can exceed Cloudinary's unsigned upload size limit
  * and is much more likely to time out on a slow mobile connection.
  * Shrinking to a sane max dimension + JPEG quality fixes both.
+ *
+ * Also resolves the final { width, height } of the resized image
+ * alongside the file, so the caller can save real dimensions to
+ * Firestore — used later to render <img width height> attributes
+ * on the gallery grid without guessing, which fixes layout shift
+ * and the "missing width/height" PageSpeed flag.
  */
 function compressImage(file, maxDimension = 1920, quality = 0.82) {
   return new Promise((resolve, reject) => {
@@ -512,9 +527,13 @@ function compressImage(file, maxDimension = 1920, quality = 0.82) {
             reject(new Error("Could not process this image."));
             return;
           }
-          resolve(new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" }));
+          resolve({
+            file: new File([blob], file.name.replace(/\.\w+$/, ".webp"), { type: "image/webp" }),
+            width,
+            height
+          });
         },
-        "image/jpeg",
+        "image/webp",
         quality
       );
 
@@ -553,7 +572,7 @@ async function startFakeUpload() {
     }
 
     uploadBtn.innerHTML = `<span class="spinner"></span> Preparing image...`;
-    const file = await compressImage(rawFile);
+    const { file, width, height } = await compressImage(rawFile);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -595,6 +614,11 @@ async function startFakeUpload() {
       story: photoStory.value,
 
       image: data.secure_url,
+
+      // Real dimensions of the compressed image — used to render
+      // width/height on the <img> tag and prevent layout shift.
+      width,
+      height,
 
       userId: auth.currentUser.uid,
 
@@ -732,6 +756,12 @@ async function loadPhotos() {
       location: photo.location,
 
       story: photo.story,
+
+      // Real dimensions if this photo was uploaded after the fix —
+      // undefined for older photos, which is fine, renderGrid()
+      // just omits the width/height attributes for those.
+      width: photo.width,
+      height: photo.height,
 
       date: photo.createdAt
         ? photo.createdAt.toDate().toISOString()
