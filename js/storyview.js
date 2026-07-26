@@ -7,7 +7,6 @@
      stories/{storyId}/reactedUsers/{uid} = { emoji }
      stories/{storyId}/comments/{commentId} = { text, userId, userName, userPhoto, createdAt }
    =========================================================== */
-import { auth } from "./firebase.js";
 import { db } from "./firestore.js";
 import {
   doc, getDoc, collection, addDoc, getDocs, query, orderBy,
@@ -26,6 +25,67 @@ const CAT_LABELS = { personal:'Personal', learning:'Learning', travel:'Travel', 
 function cldTransform(url, transform) {
   if (!url || !url.includes('/upload/')) return url;
   return url.replace('/upload/', `/upload/${transform}/`);
+}
+
+/* ---------------------------------------------------------
+   Fast path for the ONE fetch that blocks the LCP image: the
+   story document itself. The full Firestore SDK has to open a
+   channel, negotiate, etc. before it can even issue a query —
+   overhead that showed up in PageSpeed as a ~4.4s "resource
+   load delay" before the hero image even started downloading.
+   A plain fetch() against Firestore's public REST endpoint
+   skips all of that. Public reads only (matches the existing
+   `allow read: if true` rule on /stories), so no auth token
+   needed. Falls back to the normal SDK call if anything about
+   this fails, so a wrong project ID or network hiccup can never
+   break the page — it just loses the speed win for that load.
+   --------------------------------------------------------- */
+const FIRESTORE_PROJECT_ID = 'aperture-log-65415'; // update if this isn't your actual Firebase project ID
+
+function unwrapFirestoreValue(value) {
+  if (!value) return undefined;
+  if (value.stringValue !== undefined) return value.stringValue;
+  if (value.integerValue !== undefined) return parseInt(value.integerValue, 10);
+  if (value.doubleValue !== undefined) return value.doubleValue;
+  if (value.booleanValue !== undefined) return value.booleanValue;
+  if (value.timestampValue !== undefined) return new Date(value.timestampValue);
+  if (value.nullValue !== undefined) return null;
+  if (value.mapValue !== undefined) return unwrapFirestoreFields(value.mapValue.fields || {});
+  if (value.arrayValue !== undefined) return (value.arrayValue.values || []).map(unwrapFirestoreValue);
+  return undefined;
+}
+function unwrapFirestoreFields(fields) {
+  const out = {};
+  for (const key in fields) out[key] = unwrapFirestoreValue(fields[key]);
+  return out;
+}
+
+async function fetchStoryFast(storyId) {
+  const url = `https://firestore.googleapis.com/v1/projects/${FIRESTORE_PROJECT_ID}/databases/(default)/documents/stories/${storyId}`;
+  const res = await fetch(url);
+  if (res.status === 404) return { exists: false };
+  if (!res.ok) throw new Error(`Firestore REST fetch failed: ${res.status}`);
+  const json = await res.json();
+  return { exists: true, data: unwrapFirestoreFields(json.fields || {}) };
+}
+
+/* ---------------------------------------------------------
+   Firebase Auth is loaded lazily, not at page-load time. The
+   network trace showed .../auth/iframe.js (93 KiB) chaining into
+   a real network round-trip to googleapis.com (851ms) — sitting
+   in the CRITICAL PATH just because `auth` was imported at the
+   top of this file, even though nothing needs it until reactions
+   or comments render, well after the story content itself. This
+   decouples that entirely: Firebase Auth only starts loading the
+   moment something actually calls ensureAuth().
+   --------------------------------------------------------- */
+let auth = null;
+let authLoadPromise = null;
+function ensureAuth(){
+  if(!authLoadPromise){
+    authLoadPromise = import('./firebase.js').then(mod => { auth = mod.auth; return auth; });
+  }
+  return authLoadPromise;
 }
 
 const STORY_ID = new URLSearchParams(window.location.search).get('id');
@@ -70,11 +130,21 @@ async function loadStory(){
   if(!STORY_ID){ showNotFound(); return; }
 
   try{
-    const snap = await getDoc(doc(db, 'stories', STORY_ID));
-    if(!snap.exists()){ showNotFound(); return; }
+    let d;
+    try {
+      // Fast path — plain fetch(), no SDK overhead
+      const fast = await fetchStoryFast(STORY_ID);
+      if(!fast.exists){ showNotFound(); return; }
+      d = fast.data;
+    } catch(restErr){
+      // Fallback path — normal SDK, in case the REST call itself failed
+      console.warn('Fast fetch failed, falling back to SDK:', restErr);
+      const snap = await getDoc(doc(db, 'stories', STORY_ID));
+      if(!snap.exists()){ showNotFound(); return; }
+      d = snap.data();
+    }
 
-    const d = snap.data();
-    const createdAt = d.createdAt?.toDate ? d.createdAt.toDate() : new Date();
+    const createdAt = d.createdAt instanceof Date ? d.createdAt : (d.createdAt?.toDate ? d.createdAt.toDate() : new Date());
     const readTime = readTimeFromHTML(d.contentHTML || '');
     const dateStr = createdAt.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
     const excerpt = excerptFromHTML(d.contentHTML || '');
@@ -156,6 +226,7 @@ function renderReactions(){
 async function loadReactions(){
   reactionCounts = {};
   userReaction = null;
+  await ensureAuth();
   try{
     const snap = await getDoc(doc(db, 'stories', STORY_ID));
     if(snap.exists()) reactionCounts = snap.data().reactions || {};
@@ -198,6 +269,7 @@ async function toggleReaction(emojiKey){
 reactionsEl.addEventListener('click', async (e) => {
   const btn = e.target.closest('.reaction-btn');
   if(!btn) return;
+  await ensureAuth();
   if(!auth.currentUser){ alert('Please sign in to react to this story.'); return; }
   await toggleReaction(btn.dataset.key);
 });
@@ -244,6 +316,7 @@ commentForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const text = commentInput.value.trim();
   if(!text) return;
+  await ensureAuth();
   if(!auth.currentUser){ alert('Please sign in to comment.'); return; }
   try{
     await addDoc(collection(db, 'stories', STORY_ID, 'comments'), {

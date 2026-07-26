@@ -1,0 +1,1 @@
+import{i as e,t}from"./navbar-DaLM2kiY.js";/* empty css               */var n=e((()=>{var e=document.getElementById(`scroll-bar`);window.addEventListener(`scroll`,()=>{let t=document.documentElement;e.style.width=t.scrollTop/(t.scrollHeight-t.clientHeight)*100+`%`})}));t(),n();

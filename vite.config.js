@@ -24,6 +24,7 @@ export default defineConfig({
         articles: resolve(__dirname, "articles.html"),
         article: resolve(__dirname, "Blogpost01.html"),
         Blogpost02: resolve(__dirname, "Blogpost02.html"),
+        article: resolve(__dirname, "blogpost03.html"),
         photography: resolve(__dirname, "photography.html"),
         projects: resolve(__dirname, "projects.html"),
         contact: resolve(__dirname, "contact.html"),
