@@ -72,10 +72,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional"
+    rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=optional"
+      rel="stylesheet">
+  </noscript>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-MM04PXD1BN"></script>
@@ -87,6 +89,345 @@
 
     gtag('config', 'G-MM04PXD1BN');
   </script>
+
+  <!-- navbar.css inlined directly — was previously loaded as a
+       render-blocking external stylesheet on this page only; every
+       other page already got this fix during the performance pass. -->
+  <style>
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      background: color-mix(in srgb, var(--bg-canvas) 78%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 18px 32px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: .01em;
+      flex-shrink: 1;
+    }
+
+    .brand .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 0 4px var(--accent-amber-dim);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      list-style: none;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .nav-links a {
+      transition: color .2s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a.active {
+      color: var(--text-primary);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: 32px;
+      flex-shrink: 0;
+    }
+
+    .search-btn,
+    .theme-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all .2s ease;
+    }
+
+    .search-btn:hover,
+    .theme-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .mobile-toggle {
+      display: none;
+    }
+
+    @media (max-width:860px) {
+
+      nav {
+        padding: 16px 20px;
+      }
+
+      .brand {
+        font-size: 17px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .nav-right {
+        gap: 8px;
+        margin-left: 12px;
+      }
+
+    }
+
+    .auth-area {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .mobile-menu a {
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+      transition: .2s;
+    }
+
+    .mobile-menu a:hover {
+      background: var(--bg-surface-2);
+    }
+
+    .mobile-menu.show {
+      display: flex;
+    }
+
+    @media(min-width:861px) {
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    .login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 140px;
+      height: 52px;
+      padding: 0 22px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        background .25s,
+        border-color .25s,
+        transform .25s,
+        color .25s;
+    }
+
+    @media (max-width:768px) {
+      .login-btn {
+        min-width: 100px;
+        height: 40px;
+        padding: 0 12px;
+        gap: 6px;
+        font-size: 15px;
+        border-radius: 12px;
+      }
+    }
+
+    .login-btn:hover {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .profile-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 170px;
+      height: 52px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .profile-menu:hover {
+      border-color: var(--accent-teal);
+    }
+
+    .profile-menu img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile-menu span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    @media (max-width:768px) {
+
+      .profile-menu {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .profile-menu img {
+        width: 28px;
+        height: 28px;
+      }
+
+      .profile-menu span {
+        display: none;
+      }
+
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: 60px;
+      right: -8px;
+      width: 240px;
+      max-width: calc(100vw - 24px);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.25);
+      padding: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition:
+        opacity .25s ease,
+        transform .25s ease,
+        visibility .25s;
+      z-index: 999;
+    }
+
+    .profile-dropdown.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+    }
+
+    .dropdown-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .dropdown-user img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .dropdown-user strong {
+      display: block;
+      font-size: 15px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dropdown-user small {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-dropdown hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .profile-dropdown button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 15px;
+      transition: .2s;
+    }
+
+    .profile-dropdown button:hover {
+      background: var(--bg-surface-2);
+    }
+
+    #logoutBtn{
+      color:#ff6b6b;
+    }
+
+    #logoutBtn:hover{
+      background:rgba(255,107,107,.12);
+    }
+  </style>
+
   <style>
     :root {
       --bg-canvas: #0B0E14;
@@ -619,6 +960,209 @@
       text-decoration: underline;
     }
 
+    /* ---------- Reactions + Comments (inside the read overlay) ----------
+       This markup was missing entirely — stories.js queries these IDs
+       and calls .addEventListener() on them unconditionally, so their
+       absence threw a null-reference error that silently killed every
+       line of JS after it (comment posting, the reaction click handler,
+       the publish-story submit handler — none of it was actually running). */
+    .story-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0 24px;
+    }
+
+    .reaction-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 20px 0;
+      margin-bottom: 8px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      /* Reserves space for the pill row + a wrapped sign-in hint below it,
+         same fix already applied on storyview.html, so this never causes
+         a layout jump once reactions actually load in. */
+      min-height: 122px;
+    }
+
+    .reaction-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all .15s ease;
+      font-family: inherit;
+    }
+
+    .reaction-btn:hover {
+      border-color: var(--accent-teal);
+    }
+
+    .reaction-btn.active {
+      background: var(--accent-teal-dim);
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+    }
+
+    .reaction-btn .r-emoji {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .reaction-btn .r-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      color: var(--text-tertiary);
+    }
+
+    .reaction-btn.active .r-count {
+      color: var(--accent-teal);
+    }
+
+    .reaction-signin-hint {
+      font-size: 12.5px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      flex-basis: 100%;
+      margin-top: 6px;
+    }
+
+    .comments-section {
+      padding-top: 4px;
+    }
+
+    .comments-head {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .comment-input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 0 3px var(--accent-teal-dim);
+    }
+
+    .comment-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .comment-send {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      border: none;
+      color: #1A1204;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform .15s ease;
+    }
+
+    .comment-send:hover {
+      transform: scale(1.06);
+    }
+
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .comment-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .comment-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-amber), var(--accent-teal));
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1A1204;
+    }
+
+    .comment-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .comment-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comment-name {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .comment-time {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+      margin-left: 8px;
+      font-weight: 400;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .comment-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-top: 3px;
+      word-break: break-word;
+    }
+
+    .comment-empty {
+      font-size: 13.5px;
+      color: var(--text-tertiary);
+      font-style: italic;
+    }
+
     /* ---------- Share Story modal (editor) ---------- */
     .editor-overlay {
       position: fixed;
@@ -1025,12 +1569,11 @@
       }
     }
   </style>
-  <script type="module" crossorigin src="/assets/stories-DA8uZEWw.js"></script>
+  <script type="module" crossorigin src="/assets/stories-BgwfkOfq.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/navbar-DaLM2kiY.js">
   <link rel="modulepreload" crossorigin href="/assets/firebase-BnLnjH2h.js">
   <link rel="modulepreload" crossorigin href="/assets/firestore-MTczbR_P.js">
   <link rel="modulepreload" crossorigin href="/assets/cloudinary-DewP2YL9.js">
-  <link rel="stylesheet" crossorigin href="/assets/navbar-rGqnzXS_.css">
 </head>
 
 <body>
@@ -1127,9 +1670,6 @@
       <div class="hero-row">
         <div>
           <span class="eyebrow">personal stories</span>
-          <h1 class="st-title">
-            Personal <em>Stories</em>.
-          </h1>
           <h1 class="st-title">Real <em>Stories</em>.</h1>
           <p class="st-sub">Experiences, lessons, and moments worth writing down — from me, and from anyone who wants to
             add theirs.</p>
@@ -1181,6 +1721,24 @@
           <span id="read-byline"></span>
         </div>
         <div class="read-content" id="read-content"></div>
+
+        <div class="story-divider"></div>
+
+        <div class="reaction-bar" id="story-reactions"></div>
+
+        <div class="comments-section">
+          <span class="comments-head">Comments</span>
+          <form id="story-comment-form" class="comment-form">
+            <input type="text" id="story-comment-input" class="comment-input" placeholder="Add a comment..." autocomplete="off" maxlength="500">
+            <button type="submit" class="comment-send" title="Post comment">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+          </form>
+          <div class="comment-list" id="story-comment-list"><p class="comment-empty">Loading comments...</p></div>
+        </div>
       </div>
     </div>
   </div>

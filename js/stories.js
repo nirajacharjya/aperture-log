@@ -39,16 +39,17 @@ function cldTransform(url, transform) {
   if (!url || !url.includes('/upload/')) return url;
   return url.replace('/upload/', `/upload/${transform}/`);
 }
-
+import image3 from "../images/image3.webp";
+import moonImage from "../images/moon-looking-like-sun-through-clouds.webp";
 const HARDCODED_STORIES = [
 {
   id:"storypost1",
 
   hardcoded:true,
 
-  url:"storypost1.html",
+  url:"storypost01.html",
 
-  image:"/images/image3.jpg",
+  image:"/images/image3.webp",
 
   title:"The ₹217 Dinner That Became a Saga",
 
@@ -61,7 +62,29 @@ const HARDCODED_STORIES = [
   date:"2026-07-21",
 
   readTime:3
-}
+},
+  {
+    id: "storypost2",
+
+    hardcoded: true,
+
+    url: "storypost02.html",
+
+    image: moonImage,
+
+    title: "When the Moon Became the Sun",
+
+    cat: "personal",
+
+    excerpt:
+      "A quiet evening, a phone camera, and a moon that unexpectedly looked like the sun. A small moment that became a lesson about light, photography, and seeing the world differently.",
+
+    author: "Niraj Acharjya",
+
+    date: "2026-07-28",
+
+    readTime: 3
+  }
 ];
 
 let STORIES = [...HARDCODED_STORIES];
