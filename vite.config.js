@@ -34,6 +34,7 @@ export default defineConfig({
         storyView: resolve(__dirname, 'storyview.html'),
         storypost1: resolve(__dirname, "storypost1.html"),
         storypost2: resolve(__dirname, "storypost02.html"),
+        storypost3: resolve(__dirname, "storypost03.html"),
         profile: resolve(__dirname, "profile.html")
       }
     }

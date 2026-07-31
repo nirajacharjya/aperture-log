@@ -41,15 +41,16 @@ function cldTransform(url, transform) {
 }
 import image3 from "../images/image3.webp";
 import moonImage from "../images/moon-looking-like-sun-through-clouds.webp";
+import windImage from "../images/grassy-field-under-monsoon-sky.webp";
 const HARDCODED_STORIES = [
 {
   id:"storypost1",
 
   hardcoded:true,
 
-  url:"storypost01.html",
+  url:"storypost1.html",
 
-  image:"/images/image3.webp",
+  image:image3,
 
   title:"The ₹217 Dinner That Became a Saga",
 
@@ -84,7 +85,29 @@ const HARDCODED_STORIES = [
     date: "2026-07-28",
 
     readTime: 3
-  }
+},
+  {
+  id: "storypost3",
+
+  hardcoded: true,
+
+  url: "storypost03.html",
+
+  image: windImage,
+
+  title: "The Wind Doesn't Ask Permission",
+
+  cat: "personal",
+
+  excerpt:
+    "A quiet walk, a gentle breeze, and leaves that noticed the wind before I did. A small reminder that nature never waits for us to slow down—it simply keeps moving.",
+
+  author: "Niraj Acharjya",
+
+  date: "2026-07-31",
+
+  readTime: 3
+}
 ];
 
 let STORIES = [...HARDCODED_STORIES];
